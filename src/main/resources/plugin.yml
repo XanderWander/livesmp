@@ -3,4 +3,5 @@ name: LiveSMP
 version: 0.0.1
 authors: [XanderWander, Lego_freak1999]
 api-version: 1.17
-depends: [KotlinLib, LuckPerms]
+load: POSTWORLD
+depend: [KotlinLib, LuckPerms]

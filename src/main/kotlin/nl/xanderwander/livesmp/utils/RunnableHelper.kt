@@ -7,7 +7,7 @@ class RunnableHelper {
 
     companion object {
 
-        private fun runLater(wait: Long, f: () -> Any) {
+        fun runLater(wait: Long, f: () -> Any) {
             object : BukkitRunnable() {
                 override fun run() {
                     f.invoke()
