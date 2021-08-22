@@ -12,12 +12,12 @@ open class Motd: Listener {
     open fun onServerPing(event: ServerListPingEvent) {
         val t = Bukkit.getOnlinePlayers().size
         if (t == 1) {
-            event.motd = "${spaces(26)}${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-            "${spaces(8)}${ChatColor.GRAY}Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n"
+            event.motd = "${spaces(25)}${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
+            "${spaces(7)}${ChatColor.GRAY}Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n"
         }
         else {
-            event.motd = "${spaces(26)}${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-            "${spaces(8)}${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n"
+            event.motd = "${spaces(25)}${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
+            "${spaces(7)}${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n"
         }
     }
 
