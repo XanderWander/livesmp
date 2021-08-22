@@ -3,4 +3,4 @@ name: LiveSMP
 version: 0.0.1
 authors: [XanderWander, Lego_freak1999]
 api-version: 1.17
-depend: [ KotlinLib ]
+depends: [KotlinLib, LuckPerms]
