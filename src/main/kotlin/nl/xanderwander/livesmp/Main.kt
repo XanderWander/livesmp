@@ -1,5 +1,7 @@
 package nl.xanderwander.livesmp
 
+import nl.xanderwander.livesmp.core.Tablist
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
@@ -24,7 +26,7 @@ class Main: JavaPlugin() {
     }
 
     private fun registerEvents() {
-        //Bukkit.getPluginManager().registerEvents(, this)
+        Bukkit.getPluginManager().registerEvents(Tablist(), this)
     }
 
     private fun registerCommands() {
