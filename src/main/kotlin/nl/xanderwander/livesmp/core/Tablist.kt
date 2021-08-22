@@ -1,5 +1,6 @@
 package nl.xanderwander.livesmp.core
 
+import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -15,7 +16,7 @@ open class Tablist: Listener {
 
     private fun updateTab() {
         for (p: Player in Bukkit.getOnlinePlayers()) {
-            p.setPlayerListHeaderFooter("test", "test2")
+            p.setPlayerListHeaderFooter("\n${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n", "\n${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${Bukkit.getOnlinePlayers().size()}${ChatColor.GRAY} mensen online. \n\n${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n")
         }
     }
 
