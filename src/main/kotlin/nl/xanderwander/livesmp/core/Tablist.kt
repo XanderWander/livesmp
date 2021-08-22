@@ -8,15 +8,15 @@ import org.bukkit.event.player.PlayerJoinEvent
 
 open class Tablist: Listener {
 
-    fun updateTab() {
-        for (p: Player in Bukkit.getOnlinePlayers()) {
-            p.setPlayerListHeaderFooter("test", "test2")
-        }
-    }
-
     @EventHandler
     open fun onJoin(event: PlayerJoinEvent) {
         updateTab()
+    }
+
+    private fun updateTab() {
+        for (p: Player in Bukkit.getOnlinePlayers()) {
+            p.setPlayerListHeaderFooter("test", "test2")
+        }
     }
 
 }
