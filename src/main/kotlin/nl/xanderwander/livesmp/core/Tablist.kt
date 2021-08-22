@@ -30,7 +30,7 @@ open class Tablist: Listener {
                             "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
                             "",
                     "\n" +
-                            "${ChatColor.GRAY}Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n" +
+                            "${ChatColor.GRAY} Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n" +
                             "\n" +
                             "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
                             "")
@@ -41,7 +41,7 @@ open class Tablist: Listener {
                             "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
                             "",
                     "\n" +
-                            "${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n" +
+                            "${ChatColor.GRAY} Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n" +
                             "\n" +
                             "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
                             "")
