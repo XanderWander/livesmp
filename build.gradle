@@ -17,6 +17,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     compileOnly "org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT"
+    compileOnly "net.luckperms:api:5.3"
 }
 
 test {
