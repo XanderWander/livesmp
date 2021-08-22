@@ -24,28 +24,19 @@ open class Tablist: Listener {
         for (p: Player in Bukkit.getOnlinePlayers()) {
 
             val t = Bukkit.getOnlinePlayers().size
-            if (t == 1) {
-                p.setPlayerListHeaderFooter(
-                    "\n" +
-                            "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-                            "",
-                    "\n" +
-                            "${ChatColor.GRAY} Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n" +
-                            "\n" +
-                            "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
-                            "")
-            }
-            else {
-                p.setPlayerListHeaderFooter(
-                    "\n" +
-                            "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-                            "",
-                    "\n" +
-                            "${ChatColor.GRAY} Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n" +
-                            "\n" +
-                            "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
-                            "")
-            }
+
+            val mul =   if (t == 1) "${ChatColor.GRAY} Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n"
+                        else "${ChatColor.GRAY} Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n"
+
+            p.setPlayerListHeaderFooter(
+                "\n" +
+                        "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
+                        "",
+                "\n" +
+                        mul +
+                        "\n" +
+                        "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
+                        "")
 
         }
     }
