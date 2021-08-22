@@ -6,11 +6,17 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 
 open class Tablist: Listener {
 
     @EventHandler
     open fun onJoin(event: PlayerJoinEvent) {
+        updateTab()
+    }
+
+    @EventHandler
+    open fun onQuit(event: PlayerQuitEvent) {
         updateTab()
     }
 
