@@ -8,13 +8,7 @@ import org.bukkit.Bukkit
 import nl.xanderwander.livesmp.core.Tablist
 import nl.xanderwander.livesmp.data.ConfigManager
 import nl.xanderwander.livesmp.luckperms.LuckPermsHook
-import nl.xanderwander.livesmp.utils.RunnableHelper
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.scheduler.BukkitRunnable
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
 
 class Main: JavaPlugin() {
 
@@ -66,14 +60,13 @@ class Main: JavaPlugin() {
 
     }
 
-    @Throws(IOException::class)
-    fun getResourceFiles(path: String): List<String> = getResourceAsStream(path).use{
-        return if(it == null) emptyList()
-        else BufferedReader(InputStreamReader(it)).readLines()
-    }
+    fun resetConfig() {
 
-    private fun getResourceAsStream(resource: String): InputStream? =
-        Thread.currentThread().contextClassLoader.getResourceAsStream(resource)
-            ?: resource::class.java.getResourceAsStream(resource)
+//        RunnableHelper.runLater(40L) {
+//            val content = Main::class.java.getResource("/config.yml").readText()
+//            val file = configManager.safeFile("plugins/LiveSMP", "config.yml")
+//            file.writeText(content)
+//        }
+    }
 
 }
