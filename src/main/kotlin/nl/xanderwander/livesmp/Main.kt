@@ -1,6 +1,7 @@
 package nl.xanderwander.livesmp
 
 import net.luckperms.api.LuckPerms
+import nl.xanderwander.livesmp.core.Motd
 import org.bukkit.Bukkit
 import nl.xanderwander.livesmp.core.Tablist
 import nl.xanderwander.livesmp.luckperms.LuckPermsHook
@@ -35,6 +36,7 @@ class Main: JavaPlugin() {
 
     private fun registerEvents() {
         Bukkit.getPluginManager().registerEvents(Tablist(), this)
+        Bukkit.getPluginManager().registerEvents(Motd(), this)
     }
 
     private fun registerCommands() {

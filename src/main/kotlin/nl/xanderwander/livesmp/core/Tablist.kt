@@ -23,15 +23,30 @@ open class Tablist: Listener {
     private fun updateTab() {
         for (p: Player in Bukkit.getOnlinePlayers()) {
 
-            p.setPlayerListHeaderFooter(
-                "\n" +
-                        "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-                        "",
-                "\n" +
-                        "${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${Bukkit.getOnlinePlayers().size}${ChatColor.GRAY} mensen online. \n" +
-                        "\n" +
-                        "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
-                        "")
+            val t = Bukkit.getOnlinePlayers().size
+            if (t == 1) {
+                p.setPlayerListHeaderFooter(
+                    "\n" +
+                            "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
+                            "",
+                    "\n" +
+                            "${ChatColor.GRAY}Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n" +
+                            "\n" +
+                            "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
+                            "")
+            }
+            else {
+                p.setPlayerListHeaderFooter(
+                    "\n" +
+                            "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
+                            "",
+                    "\n" +
+                            "${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n" +
+                            "\n" +
+                            "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
+                            "")
+            }
+
         }
     }
 
