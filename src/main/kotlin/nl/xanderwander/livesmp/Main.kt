@@ -2,6 +2,7 @@ package nl.xanderwander.livesmp
 
 import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
+import nl.xanderwander.livesmp.core.Tablist
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
@@ -29,7 +30,7 @@ class Main: JavaPlugin() {
     }
 
     private fun registerEvents() {
-        //Bukkit.getPluginManager().registerEvents(, this)
+        Bukkit.getPluginManager().registerEvents(Tablist(), this)
     }
 
     private fun registerCommands() {
