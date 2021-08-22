@@ -3,6 +3,7 @@ package nl.xanderwander.livesmp
 import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
 import nl.xanderwander.livesmp.core.Tablist
+import nl.xanderwander.livesmp.luckperms.LuckPermsHook
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
@@ -12,6 +13,7 @@ class Main: JavaPlugin() {
     }
 
     var luckPerms: LuckPerms? = null
+    lateinit var luckPermsHook: LuckPermsHook
 
     override fun onEnable() {
 
@@ -20,6 +22,8 @@ class Main: JavaPlugin() {
         registerCommands()
         registerEvents()
         loadLuckPerms()
+
+        luckPermsHook = LuckPermsHook()
 
         logger.info("${description.name} V${description.version} has been enabled.")
 
