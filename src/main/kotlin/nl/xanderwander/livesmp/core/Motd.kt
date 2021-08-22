@@ -13,11 +13,11 @@ open class Motd: Listener {
         val t = Bukkit.getOnlinePlayers().size
         if (t == 1) {
             event.motd = "${spaces(26)}${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-            "${spaces(9)}${ChatColor.GRAY}Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n"
+            "${spaces(8)}${ChatColor.GRAY}Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n"
         }
         else {
             event.motd = "${spaces(26)}${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
-            "${spaces(9)}${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n"
+            "${spaces(8)}${ChatColor.GRAY}Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n"
         }
     }
 
