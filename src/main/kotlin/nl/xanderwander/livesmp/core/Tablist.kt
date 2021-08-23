@@ -1,6 +1,7 @@
 package nl.xanderwander.livesmp.core
 
 import net.md_5.bungee.api.ChatColor
+import nl.xanderwander.livesmp.utils.RunnableHelper
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -17,7 +18,9 @@ open class Tablist: Listener {
 
     @EventHandler
     open fun onQuit(event: PlayerQuitEvent) {
-        updateTab()
+        RunnableHelper.runLater(1L) {
+            updateTab()
+        }
     }
 
     private fun updateTab() {
