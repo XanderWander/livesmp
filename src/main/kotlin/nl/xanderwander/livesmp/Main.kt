@@ -8,6 +8,13 @@ import org.bukkit.Bukkit
 import nl.xanderwander.livesmp.core.Tablist
 import nl.xanderwander.livesmp.data.ConfigManager
 import nl.xanderwander.livesmp.luckperms.LuckPermsHook
+import nl.xanderwander.livesmp.menus.MenuClick
+import nl.xanderwander.livesmp.menus.MenuCommand
+import nl.xanderwander.livesmp.menus.MenuInstances
+import nl.xanderwander.livesmp.modules.PlayerModule
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryDragEvent
+import org.bukkit.inventory.Inventory
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
@@ -16,10 +23,15 @@ class Main: JavaPlugin() {
         lateinit var instance: Main
     }
 
-    var luckPerms: LuckPerms? = null
-
+    lateinit var menuClick: MenuClick
     lateinit var configManager: ConfigManager
     lateinit var luckPermsHook: LuckPermsHook
+    lateinit var menuInstances: MenuInstances
+
+    var luckPerms: LuckPerms? = null
+    var playerModule = PlayerModule()
+    val listeners = hashMapOf<Inventory, (event: InventoryClickEvent) -> Unit>()
+    val dragListeners = hashMapOf<Inventory, (event: InventoryDragEvent) -> Unit>()
 
     override fun onEnable() {
 
@@ -29,8 +41,14 @@ class Main: JavaPlugin() {
         registerEvents()
         loadLuckPerms()
 
+        menuClick = MenuClick()
         configManager = ConfigManager()
         luckPermsHook = LuckPermsHook()
+        menuInstances = MenuInstances()
+
+        for (player in Bukkit.getOnlinePlayers()) {
+            playerModule.register(player)
+        }
 
         logger.info("${description.name} V${description.version} has been enabled.")
 
@@ -41,14 +59,16 @@ class Main: JavaPlugin() {
     }
 
     private fun registerEvents() {
+        Bukkit.getPluginManager().registerEvents(PlayerModule(), this)
         Bukkit.getPluginManager().registerEvents(ChatEvent(), this)
         Bukkit.getPluginManager().registerEvents(Motd(), this)
         Bukkit.getPluginManager().registerEvents(Resourcepack(), this)
         Bukkit.getPluginManager().registerEvents(Tablist(), this)
+        Bukkit.getPluginManager().registerEvents(MenuClick(), this)
     }
 
     private fun registerCommands() {
-        //getCommand("")?.setExecutor()
+        getCommand("menu")?.setExecutor(MenuCommand())
     }
 
     private fun loadLuckPerms() {

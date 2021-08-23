@@ -24,18 +24,17 @@ open class Tablist: Listener {
         for (p: Player in Bukkit.getOnlinePlayers()) {
 
             val t = Bukkit.getOnlinePlayers().size
-
-            val mul =   if (t == 1) "${ChatColor.GRAY} Er is op dit moment ${ChatColor.of("#ff0000")}1${ChatColor.GRAY} speler online. \n"
-                        else "${ChatColor.GRAY} Er zijn op dit moment ${ChatColor.of("#ff0000")}${t}${ChatColor.GRAY} spelers online. \n"
+            val red = ChatColor.of("#ff0000")
+            val mul =   if (t != 1) listOf("zijn", "spelers") else listOf("is", "speler")
 
             p.setPlayerListHeaderFooter(
                 "\n" +
-                        "${ChatColor.of("#ff0000")}${ChatColor.BOLD}Live${ChatColor.WHITE}${ChatColor.BOLD}SMP\n" +
+                        "${red}§l Live${"§f§l"}SMP \n" +
                         "",
                 "\n" +
-                        mul +
+                        "§7 Er ${mul[0]} op dit moment ${red}$t §7${mul[1]} online. \n" +
                         "\n" +
-                        "${ChatColor.of("#ff0000")}${ChatColor.UNDERLINE}LiveSMP.com\n" +
+                        "${red}§nLiveSMP.com\n" +
                         "")
 
         }

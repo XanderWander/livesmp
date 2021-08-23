@@ -15,6 +15,22 @@ class RunnableHelper {
             }.runTaskLater(Main.instance, wait)
         }
 
+        fun doSync(f: () -> Any) {
+            object : BukkitRunnable() {
+                override fun run() {
+                    f.invoke()
+                }
+            }.runTask(Main.instance)
+        }
+
+        fun doAsync(f: () -> Any) {
+            object : BukkitRunnable() {
+                override fun run() {
+                    f.invoke()
+                }
+            }.runTaskAsynchronously(Main.instance)
+        }
+
         fun run(wait: Long, period: Long, f: () -> Any): BukkitRunnable {
             val runnable = object : BukkitRunnable() {
                 override fun run() {
