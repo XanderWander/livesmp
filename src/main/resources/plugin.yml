@@ -8,3 +8,9 @@ depend: [KotlinLib, LuckPerms]
 commands:
   menu:
     description: Open menus
+  resourcepack:
+    description: Load latest resourcepack
+  rp:
+    description: Load latest resourcepack
+  rrp:
+    description: unload resourcepack

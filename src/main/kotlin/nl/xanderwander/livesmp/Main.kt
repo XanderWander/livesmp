@@ -69,6 +69,9 @@ class Main: JavaPlugin() {
 
     private fun registerCommands() {
         getCommand("menu")?.setExecutor(MenuCommand())
+        getCommand("resourcepack")?.setExecutor(Resourcepack())
+        getCommand("rp")?.setExecutor(Resourcepack())
+        getCommand("rrp")?.setExecutor(Resourcepack())
     }
 
     private fun loadLuckPerms() {

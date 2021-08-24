@@ -4,24 +4,33 @@ import nl.xanderwander.livesmp.utils.RunnableHelper
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
 open class Resourcepack: Listener, CommandExecutor {
 
+    val url = "http://resourcepacks.hyparks.com/latest.php"
+
     @EventHandler
     open fun onJoin(event: PlayerJoinEvent) {
         val p = event.player
 
         RunnableHelper.runLater(5 * 20L) {
-            p.setResourcePack("http://resourcepacks.hyparks.com/latest.php")
+            p.setResourcePack(url)
         }
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-
-
+        if (sender is Player) {
+            if (command.name == "rrp") {
+                sender.setResourcePack("http://test.com/")
+            }
+            else {
+                sender.setResourcePack(url)
+            }
+        }
         return true
     }
 
