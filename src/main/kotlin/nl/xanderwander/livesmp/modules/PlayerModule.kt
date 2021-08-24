@@ -13,6 +13,17 @@ class PlayerModule: Listener {
         val allPlayers = arrayListOf<Player>()
         val visiblePlayers = arrayListOf<Player>()
         val hiddenPlayers = arrayListOf<Player>()
+
+        private val joinListeners = arrayListOf<(event: PlayerJoinEvent) -> Unit>()
+        private val quitListeners = arrayListOf<(event: PlayerQuitEvent) -> Unit>()
+
+        fun onJoin(f: (event: PlayerJoinEvent) -> Unit) {
+            joinListeners.add(f)
+        }
+
+        fun onQuit(f: (event: PlayerQuitEvent) -> Unit) {
+            quitListeners.add(f)
+        }
     }
 
     fun register(player: Player) {
@@ -53,11 +64,19 @@ class PlayerModule: Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
         register(event.player)
+
+        for (f in joinListeners) {
+            f.invoke(event)
+        }
     }
 
     @EventHandler
     fun onQuit(event: PlayerQuitEvent) {
         remove(event.player)
+
+        for (f in quitListeners) {
+            f.invoke(event)
+        }
     }
 
 }

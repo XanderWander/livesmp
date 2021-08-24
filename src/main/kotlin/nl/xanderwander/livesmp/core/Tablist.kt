@@ -1,6 +1,7 @@
 package nl.xanderwander.livesmp.core
 
 import net.md_5.bungee.api.ChatColor
+import nl.xanderwander.livesmp.utils.ChatFormat
 import nl.xanderwander.livesmp.utils.RunnableHelper
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -32,7 +33,7 @@ open class Tablist: Listener {
 
             p.setPlayerListHeaderFooter(
                 "\n" +
-                        "${red}§l Live${"§f§l"}SMP \n" +
+                        "${ChatFormat.prefix}\n" +
                         "",
                 "\n" +
                         "§7 Er ${mul[0]} op dit moment ${red}$t §7${mul[1]} online. \n" +

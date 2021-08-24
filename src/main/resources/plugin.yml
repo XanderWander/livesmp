@@ -8,6 +8,8 @@ depend: [KotlinLib, LuckPerms]
 commands:
   menu:
     description: Open menus
+  slapen:
+    description: Slaap command
   resourcepack:
     description: Load latest resourcepack
   rp:

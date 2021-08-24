@@ -9,9 +9,12 @@ import nl.xanderwander.livesmp.core.Tablist
 import nl.xanderwander.livesmp.data.ConfigManager
 import nl.xanderwander.livesmp.luckperms.LuckPermsHook
 import nl.xanderwander.livesmp.menus.MenuClick
-import nl.xanderwander.livesmp.menus.MenuCommand
+import nl.xanderwander.livesmp.commands.MenuCommand
+import nl.xanderwander.livesmp.commands.SleepCommand
+import nl.xanderwander.livesmp.events.PlayerSleep
 import nl.xanderwander.livesmp.menus.MenuInstances
 import nl.xanderwander.livesmp.modules.PlayerModule
+import nl.xanderwander.livesmp.modules.SleepModule
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.inventory.Inventory
@@ -27,9 +30,10 @@ class Main: JavaPlugin() {
     lateinit var configManager: ConfigManager
     lateinit var luckPermsHook: LuckPermsHook
     lateinit var menuInstances: MenuInstances
+    lateinit var sleepModule: SleepModule
 
     var luckPerms: LuckPerms? = null
-    var playerModule = PlayerModule()
+    val playerModule = PlayerModule()
     val listeners = hashMapOf<Inventory, (event: InventoryClickEvent) -> Unit>()
     val dragListeners = hashMapOf<Inventory, (event: InventoryDragEvent) -> Unit>()
 
@@ -45,6 +49,7 @@ class Main: JavaPlugin() {
         configManager = ConfigManager()
         luckPermsHook = LuckPermsHook()
         menuInstances = MenuInstances()
+        sleepModule = SleepModule()
 
         for (player in Bukkit.getOnlinePlayers()) {
             playerModule.register(player)
@@ -55,6 +60,10 @@ class Main: JavaPlugin() {
     }
 
     override fun onDisable() {
+
+        sleepModule.cancel()
+        sleepModule.destroy()
+
         logger.info("${description.name} has been disabled.")
     }
 
@@ -65,6 +74,7 @@ class Main: JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(Resourcepack(), this)
         Bukkit.getPluginManager().registerEvents(Tablist(), this)
         Bukkit.getPluginManager().registerEvents(MenuClick(), this)
+        Bukkit.getPluginManager().registerEvents(PlayerSleep(), this)
     }
 
     private fun registerCommands() {
@@ -72,6 +82,7 @@ class Main: JavaPlugin() {
         getCommand("resourcepack")?.setExecutor(Resourcepack())
         getCommand("rp")?.setExecutor(Resourcepack())
         getCommand("rrp")?.setExecutor(Resourcepack())
+        getCommand("slapen")?.setExecutor(SleepCommand())
     }
 
     private fun loadLuckPerms() {

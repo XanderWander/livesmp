@@ -1,6 +1,7 @@
-package nl.xanderwander.livesmp.menus
+package nl.xanderwander.livesmp.commands
 
 import nl.xanderwander.livesmp.Main
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -14,6 +15,11 @@ class MenuCommand: CommandExecutor {
                 Main.instance.menuInstances.streamerMenu.openTo(sender)
             }
         }
+
+        if (args[0] == "bc") {
+            Bukkit.broadcastMessage("Fakka $args")
+        }
+
         return true
     }
 
