@@ -12,6 +12,7 @@ import nl.xanderwander.livesmp.menus.MenuClick
 import nl.xanderwander.livesmp.commands.MenuCommand
 import nl.xanderwander.livesmp.commands.SleepCommand
 import nl.xanderwander.livesmp.events.PlayerSleep
+import nl.xanderwander.livesmp.events.SilkSpawners
 import nl.xanderwander.livesmp.menus.MenuInstances
 import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.modules.SleepModule
@@ -75,6 +76,7 @@ class Main: JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(Tablist(), this)
         Bukkit.getPluginManager().registerEvents(MenuClick(), this)
         Bukkit.getPluginManager().registerEvents(PlayerSleep(), this)
+        Bukkit.getPluginManager().registerEvents(SilkSpawners(), this)
     }
 
     private fun registerCommands() {
