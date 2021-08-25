@@ -16,3 +16,7 @@ commands:
     description: Load latest resourcepack
   rrp:
     description: unload resourcepack
+  admin:
+    description: Admin menu
+  adminmode:
+    description: Use admin mode

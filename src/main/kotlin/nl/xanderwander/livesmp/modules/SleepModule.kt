@@ -43,6 +43,7 @@ class SleepModule: BukkitRunnable() {
                 bossBarRemoving = true
                 RunnableHelper.runLater(100L) {
                     bossBarRemoving = false
+                    bossBar.progress = 0.0
                     bossBar.removeAll()
                 }
             } else if (!bossBarRemoving) {

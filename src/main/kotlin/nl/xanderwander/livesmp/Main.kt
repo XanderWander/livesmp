@@ -6,14 +6,15 @@ import nl.xanderwander.livesmp.core.Motd
 import nl.xanderwander.livesmp.core.Resourcepack
 import org.bukkit.Bukkit
 import nl.xanderwander.livesmp.core.Tablist
-import nl.xanderwander.livesmp.data.ConfigManager
 import nl.xanderwander.livesmp.luckperms.LuckPermsHook
 import nl.xanderwander.livesmp.menus.MenuClick
 import nl.xanderwander.livesmp.commands.MenuCommand
 import nl.xanderwander.livesmp.commands.SleepCommand
 import nl.xanderwander.livesmp.events.PlayerSleep
 import nl.xanderwander.livesmp.events.SilkSpawners
+import nl.xanderwander.livesmp.events.TabComplete
 import nl.xanderwander.livesmp.menus.MenuInstances
+import nl.xanderwander.livesmp.menus.admin.AdminMode
 import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.modules.SleepModule
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -28,13 +29,14 @@ class Main: JavaPlugin() {
     }
 
     lateinit var menuClick: MenuClick
-    lateinit var configManager: ConfigManager
     lateinit var luckPermsHook: LuckPermsHook
     lateinit var menuInstances: MenuInstances
     lateinit var sleepModule: SleepModule
 
     var luckPerms: LuckPerms? = null
     val playerModule = PlayerModule()
+    val tablist = Tablist()
+    val adminMode = AdminMode()
     val listeners = hashMapOf<Inventory, (event: InventoryClickEvent) -> Unit>()
     val dragListeners = hashMapOf<Inventory, (event: InventoryDragEvent) -> Unit>()
 
@@ -47,7 +49,6 @@ class Main: JavaPlugin() {
         loadLuckPerms()
 
         menuClick = MenuClick()
-        configManager = ConfigManager()
         luckPermsHook = LuckPermsHook()
         menuInstances = MenuInstances()
         sleepModule = SleepModule()
@@ -77,6 +78,7 @@ class Main: JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(MenuClick(), this)
         Bukkit.getPluginManager().registerEvents(PlayerSleep(), this)
         Bukkit.getPluginManager().registerEvents(SilkSpawners(), this)
+        Bukkit.getPluginManager().registerEvents(TabComplete(), this)
     }
 
     private fun registerCommands() {
@@ -85,6 +87,8 @@ class Main: JavaPlugin() {
         getCommand("rp")?.setExecutor(Resourcepack())
         getCommand("rrp")?.setExecutor(Resourcepack())
         getCommand("slapen")?.setExecutor(SleepCommand())
+        getCommand("admin")?.setExecutor(MenuCommand())
+        getCommand("adminmode")?.setExecutor(adminMode)
     }
 
     private fun loadLuckPerms() {
@@ -94,15 +98,6 @@ class Main: JavaPlugin() {
             luckPerms = provider.provider
         }
 
-    }
-
-    fun resetConfig() {
-
-//        RunnableHelper.runLater(40L) {
-//            val content = Main::class.java.getResource("/config.yml").readText()
-//            val file = configManager.safeFile("plugins/LiveSMP", "config.yml")
-//            file.writeText(content)
-//        }
     }
 
 }

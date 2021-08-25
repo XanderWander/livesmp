@@ -2,9 +2,7 @@ package nl.xanderwander.livesmp.chat
 
 import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.modules.PlayerModule
-import nl.xanderwander.livesmp.utils.RunnableHelper
 import nl.xanderwander.livesmp.utils.StringUtils
-import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -26,6 +24,8 @@ class ChatEvent: Listener {
             for (receiver in PlayerModule.hiddenPlayers) {
                 receiver.sendMessage("§8[Hidden] $message")
             }
+            Main.instance.logger.info("§8[Hidden] $message")
+            return
         } else {
             for (receiver in PlayerModule.allPlayers) {
                 receiver.sendMessage(message)

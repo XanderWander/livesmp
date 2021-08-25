@@ -1,6 +1,7 @@
 package nl.xanderwander.livesmp.core
 
 import net.md_5.bungee.api.ChatColor
+import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.utils.ChatFormat
 import nl.xanderwander.livesmp.utils.RunnableHelper
 import org.bukkit.Bukkit
@@ -24,10 +25,10 @@ open class Tablist: Listener {
         }
     }
 
-    private fun updateTab() {
+    fun updateTab() {
         for (p: Player in Bukkit.getOnlinePlayers()) {
 
-            val t = Bukkit.getOnlinePlayers().size
+            val t = PlayerModule.visiblePlayers.size
             val red = ChatColor.of("#ff0000")
             val mul =   if (t != 1) listOf("zijn", "spelers") else listOf("is", "speler")
 
