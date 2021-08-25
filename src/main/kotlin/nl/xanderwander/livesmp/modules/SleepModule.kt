@@ -6,6 +6,7 @@ import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.utils.ChatFormat
 import nl.xanderwander.livesmp.utils.RunnableHelper
 import org.bukkit.Bukkit
+import org.bukkit.Statistic
 import org.bukkit.World
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
@@ -93,6 +94,9 @@ class SleepModule: BukkitRunnable() {
     }
 
     fun makeDay(players: ArrayList<Player>,world: World) {
+        for (player in sleeping) {
+            player.setStatistic(Statistic.TIME_SINCE_REST,0)
+        }
         world.time = 0L
         world.isThundering = false
         world.setStorm(false)
