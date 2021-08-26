@@ -72,9 +72,7 @@ class SleepModule: BukkitRunnable() {
     }
 
     private fun makeDay(players: ArrayList<Player>, world: World) {
-        for (player in PlayerManager.match(PlayerFlag.IS_SLEEPING)) {
-            player.setStatistic(Statistic.TIME_SINCE_REST,0)
-        }
+        PlayerManager.match(PlayerFlag.IS_SLEEPING).forEach { it.setStatistic(Statistic.TIME_SINCE_REST, 0) }
         world.time = 0L
         world.isThundering = false
         world.setStorm(false)
@@ -86,7 +84,6 @@ class SleepModule: BukkitRunnable() {
         if (world.isThundering) return true
         if (world.hasStorm()  ) return (time in 12011..23991)
         return (time in 12542..23460)
-
     }
 
 }
