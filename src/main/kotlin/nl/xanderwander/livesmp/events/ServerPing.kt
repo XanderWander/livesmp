@@ -1,4 +1,4 @@
-package nl.xanderwander.livesmp.core
+package nl.xanderwander.livesmp.events
 
 import net.md_5.bungee.api.ChatColor
 import nl.xanderwander.livesmp.utils.StringUtils
@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.server.ServerListPingEvent
 
-open class Motd: Listener {
+open class ServerPing: Listener {
 
     @EventHandler
     open fun onServerPing(event: ServerListPingEvent) {

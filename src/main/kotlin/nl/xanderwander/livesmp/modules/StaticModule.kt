@@ -1,47 +1,49 @@
-package nl.xanderwander.livesmp.commands
+package nl.xanderwander.livesmp.modules
 
+import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.chat.hover.content.Text
-import nl.xanderwander.livesmp.Main
+import nl.xanderwander.livesmp.player.PlayerFlag
+import nl.xanderwander.livesmp.player.PlayerManager
 import nl.xanderwander.livesmp.utils.ChatFormat
 import org.bukkit.Bukkit
-import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class MenuCommand: CommandExecutor {
+class StaticModule {
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+    companion object {
+        private const val url = "http://resourcepacks.hyparks.com/latest.php"
 
-        if (label == "admin") {
-            if (sender is Player) {
-                Main.instance.menuInstances.adminMenu.openTo(sender)
+        fun setResourcePack(p: Player) {
+            p.setResourcePack(url)
+        }
+
+        fun resetResourcePack(p: Player) {
+            p.setResourcePack("http://reset.com/")
+        }
+
+        fun updateTab() {
+            for (p: Player in PlayerManager.all()) {
+                val t = PlayerManager.reverseCount(PlayerFlag.IS_HIDDEN)
+                val red = ChatColor.of("#ff0000")
+                val mul = if (t != 1) listOf("zijn", "spelers") else listOf("is", "speler")
+                p.setPlayerListHeaderFooter(
+                    "\n" +
+                            "${ChatFormat.prefix}\n" +
+                            "",
+                    "\n" +
+                            "§7 Er ${mul[0]} op dit moment ${red}$t §7${mul[1]} online. \n" +
+                            "\n" +
+                            "${red}§nLiveSMP.com\n" +
+                            ""
+                )
             }
-            return true
         }
 
-        if (args[0] == "streamer") {
-            if (sender is Player) {
-                Main.instance.menuInstances.streamerMenu.openTo(sender)
-            }
-        }
-
-        if (args[0] == "bc") {
-            Bukkit.broadcastMessage("Fakka $args")
-        }
-
-        if (args[0] == "perm") {
-            sender.sendMessage("${(sender.hasPermission("tag.noob"))}")
-        }
-
-        val player = sender as Player
-
-        if (args[0] == "test") {
-
+        fun joinInfo(player: Player) {
             val message = TextComponent("     ")
             val help = TextComponent("§e[Help]")
             val spaces1 = TextComponent("      ")
@@ -86,10 +88,7 @@ class MenuCommand: CommandExecutor {
             player.spigot().sendMessage(ChatMessageType.CHAT, message2)
             player.sendMessage("")
             player.sendMessage("§8§l§m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯")
-
         }
-
-        return true
     }
 
 }

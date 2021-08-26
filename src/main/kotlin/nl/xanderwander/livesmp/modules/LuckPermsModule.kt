@@ -1,10 +1,23 @@
-package nl.xanderwander.livesmp.luckperms
+package nl.xanderwander.livesmp.modules
 
+import net.luckperms.api.LuckPerms
 import net.luckperms.api.model.user.User
 import nl.xanderwander.livesmp.Main
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class LuckPermsHook {
+class LuckPermsModule {
+
+    private lateinit var luckPerms: LuckPerms
+
+    init {
+        val provider = Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)
+        if (provider != null) {
+            luckPerms = provider.provider
+        } else {
+            Main.instance.logger.severe("LuckPerms could provider could not be loaded!")
+        }
+    }
 
     fun playerPrefix(p: Player): String {
         val user = luckPermsUser(p)
@@ -19,7 +32,7 @@ class LuckPermsHook {
     }
 
     private fun luckPermsUser(p: Player): User? {
-        return Main.instance.luckPerms?.userManager?.getUser(p.uniqueId)
+        return luckPerms.userManager.getUser(p.uniqueId)
     }
 
 }

@@ -1,25 +1,13 @@
 package nl.xanderwander.livesmp
 
 import net.luckperms.api.LuckPerms
-import nl.xanderwander.livesmp.chat.ChatEvent
-import nl.xanderwander.livesmp.core.Motd
-import nl.xanderwander.livesmp.core.Resourcepack
 import org.bukkit.Bukkit
-import nl.xanderwander.livesmp.core.Tablist
-import nl.xanderwander.livesmp.luckperms.LuckPermsHook
-import nl.xanderwander.livesmp.menus.MenuClick
-import nl.xanderwander.livesmp.commands.MenuCommand
-import nl.xanderwander.livesmp.commands.SleepCommand
-import nl.xanderwander.livesmp.events.PlayerSleep
-import nl.xanderwander.livesmp.events.SilkSpawners
-import nl.xanderwander.livesmp.events.TabComplete
-import nl.xanderwander.livesmp.menus.MenuInstances
-import nl.xanderwander.livesmp.menus.admin.AdminMode
-import nl.xanderwander.livesmp.modules.PlayerModule
+import nl.xanderwander.livesmp.modules.LuckPermsModule
+import nl.xanderwander.livesmp.commands.AdminMode
+import nl.xanderwander.livesmp.modules.RegisterModule
 import nl.xanderwander.livesmp.modules.SleepModule
-import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryDragEvent
-import org.bukkit.inventory.Inventory
+import nl.xanderwander.livesmp.modules.StaticModule
+import nl.xanderwander.livesmp.player.PlayerManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
@@ -28,34 +16,24 @@ class Main: JavaPlugin() {
         lateinit var instance: Main
     }
 
-    lateinit var menuClick: MenuClick
-    lateinit var luckPermsHook: LuckPermsHook
-    lateinit var menuInstances: MenuInstances
-    lateinit var sleepModule: SleepModule
+    private val registerModule = RegisterModule()
 
     var luckPerms: LuckPerms? = null
-    val playerModule = PlayerModule()
-    val tablist = Tablist()
+
+    val sleepModule = SleepModule()
+    val luckPermsModule = LuckPermsModule()
     val adminMode = AdminMode()
-    val listeners = hashMapOf<Inventory, (event: InventoryClickEvent) -> Unit>()
-    val dragListeners = hashMapOf<Inventory, (event: InventoryDragEvent) -> Unit>()
 
     override fun onEnable() {
 
         instance = this
 
-        registerCommands()
-        registerEvents()
+        registerModule.register(this)
+        sleepModule.runTaskTimer(this, 0L, 1L)
+
+        PlayerManager.initialize()
+        StaticModule.updateTab()
         loadLuckPerms()
-
-        menuClick = MenuClick()
-        luckPermsHook = LuckPermsHook()
-        menuInstances = MenuInstances()
-        sleepModule = SleepModule()
-
-        for (player in Bukkit.getOnlinePlayers()) {
-            playerModule.register(player)
-        }
 
         logger.info("${description.name} V${description.version} has been enabled.")
 
@@ -67,28 +45,6 @@ class Main: JavaPlugin() {
         sleepModule.destroy()
 
         logger.info("${description.name} has been disabled.")
-    }
-
-    private fun registerEvents() {
-        Bukkit.getPluginManager().registerEvents(PlayerModule(), this)
-        Bukkit.getPluginManager().registerEvents(ChatEvent(), this)
-        Bukkit.getPluginManager().registerEvents(Motd(), this)
-        Bukkit.getPluginManager().registerEvents(Resourcepack(), this)
-        Bukkit.getPluginManager().registerEvents(Tablist(), this)
-        Bukkit.getPluginManager().registerEvents(MenuClick(), this)
-        Bukkit.getPluginManager().registerEvents(PlayerSleep(), this)
-        Bukkit.getPluginManager().registerEvents(SilkSpawners(), this)
-        Bukkit.getPluginManager().registerEvents(TabComplete(), this)
-    }
-
-    private fun registerCommands() {
-        getCommand("menu")?.setExecutor(MenuCommand())
-        getCommand("resourcepack")?.setExecutor(Resourcepack())
-        getCommand("rp")?.setExecutor(Resourcepack())
-        getCommand("rrp")?.setExecutor(Resourcepack())
-        getCommand("slapen")?.setExecutor(SleepCommand())
-        getCommand("admin")?.setExecutor(MenuCommand())
-        getCommand("adminmode")?.setExecutor(adminMode)
     }
 
     private fun loadLuckPerms() {
