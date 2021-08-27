@@ -17,7 +17,7 @@ class ChatEvent: Listener {
         event.isCancelled = true
 
         val player = event.player
-        val prefix = Main.instance.luckPermsModule.playerPrefix(player)
+        val prefix = Main.luckPermsModule.playerPrefix(player)
         val message = "$prefix §7${player.name} §9» §f${StringUtils.removeIfFirst(event.message, "!")}"
 
         if (PlayerManager.getFlag(player, PlayerFlag.IS_HIDDEN) && !event.message.startsWith("!")) {

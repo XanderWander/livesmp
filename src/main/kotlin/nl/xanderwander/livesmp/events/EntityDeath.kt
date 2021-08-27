@@ -14,11 +14,14 @@ class EntityDeath: Listener {
         val drops = event.drops
         for (drop in drops) {
             if (drop.type == Material.WHITE_BANNER) {
-                val advancement = Bukkit.getAdvancement(NamespacedKey.minecraft("adventure/voluntary_exile"))
-                val progress = event.entity.killer.getAdvancementProgress(advancement)
-                val criterias = progress.remainingCriteria
-                for (criteria in criterias) {
-                    progress.awardCriteria(criteria)
+                val killer = event.entity.killer
+                if (killer != null) {
+                    val advancement = Bukkit.getAdvancement(NamespacedKey.minecraft("adventure/voluntary_exile"))
+                    val progress = killer.getAdvancementProgress(advancement ?: return)
+                    val criteria = progress.remainingCriteria
+                    for (criterion in criteria) {
+                        progress.awardCriteria(criterion)
+                    }
                 }
             }
         }

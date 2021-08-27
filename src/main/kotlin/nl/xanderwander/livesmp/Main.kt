@@ -14,26 +14,24 @@ class Main: JavaPlugin() {
 
     companion object {
         lateinit var instance: Main
+        lateinit var luckPermsModule: LuckPermsModule
     }
 
     private val registerModule = RegisterModule()
 
-    var luckPerms: LuckPerms? = null
-
     val sleepModule = SleepModule()
-    val luckPermsModule = LuckPermsModule()
     val adminMode = AdminMode()
 
     override fun onEnable() {
 
         instance = this
+        luckPermsModule = LuckPermsModule()
 
         registerModule.register(this)
         sleepModule.runTaskTimer(this, 0L, 1L)
 
         PlayerManager.initialize()
         StaticModule.updateTab()
-        loadLuckPerms()
 
         logger.info("${description.name} V${description.version} has been enabled.")
 
@@ -45,15 +43,6 @@ class Main: JavaPlugin() {
         sleepModule.destroy()
 
         logger.info("${description.name} has been disabled.")
-    }
-
-    private fun loadLuckPerms() {
-
-        val provider = Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)
-        if (provider != null) {
-            luckPerms = provider.provider
-        }
-
     }
 
 }
