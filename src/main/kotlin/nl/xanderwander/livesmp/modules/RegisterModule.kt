@@ -17,6 +17,7 @@ class RegisterModule {
         Bukkit.getPluginManager().registerEvents(BreakPlace(), instance)
         Bukkit.getPluginManager().registerEvents(JoinQuit(), instance)
         Bukkit.getPluginManager().registerEvents(ChatEvent(), instance)
+        Bukkit.getPluginManager().registerEvents(EntityDeath(), instance)
         Bukkit.getPluginManager().registerEvents(PlayerSleep(), instance)
         Bukkit.getPluginManager().registerEvents(ServerPing(), instance)
         Bukkit.getPluginManager().registerEvents(TabComplete(), instance)
