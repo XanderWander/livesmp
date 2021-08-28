@@ -23,6 +23,7 @@ class RegisterModule {
         Bukkit.getPluginManager().registerEvents(TabComplete(), instance)
         Bukkit.getPluginManager().registerEvents(WorldChange(), instance)
         Bukkit.getPluginManager().registerEvents(EntityChangeBlock(), instance)
+        Bukkit.getPluginManager().registerEvents(PlayerInteractEvent(), instance)
     }
 
     private fun registerCommands(instance: Main) {
