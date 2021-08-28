@@ -18,7 +18,7 @@ import org.bukkit.entity.Player
 class AdminMode: CommandExecutor {
 
     private val adminMode = hashMapOf<Player, Location>()
-    private val bossBar = Bukkit.createBossBar("§8AdminMode", BarColor.BLUE, BarStyle.SOLID)
+    private val bossBar = Bukkit.createBossBar("§4AdminMode", BarColor.RED, BarStyle.SOLID)
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender.hasPermission("level.admin") && sender is Player) {
