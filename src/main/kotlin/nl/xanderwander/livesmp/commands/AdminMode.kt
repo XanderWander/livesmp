@@ -5,8 +5,11 @@ import nl.xanderwander.livesmp.modules.StaticModule
 import nl.xanderwander.livesmp.player.PlayerFlag
 import nl.xanderwander.livesmp.player.PlayerManager
 import nl.xanderwander.livesmp.utils.ChatFormat
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Location
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -15,6 +18,7 @@ import org.bukkit.entity.Player
 class AdminMode: CommandExecutor {
 
     private val adminMode = hashMapOf<Player, Location>()
+    private val bossBar = Bukkit.createBossBar("§8AdminMode", BarColor.BLUE, BarStyle.SOLID)
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender.hasPermission("level.admin") && sender is Player) {
@@ -61,6 +65,7 @@ class AdminMode: CommandExecutor {
     }
 
     private fun setAdminMode(player: Player) {
+        bossBar.addPlayer(player)
         adminMode[player] = player.location
         player.gameMode = GameMode.SPECTATOR
         PlayerManager.getPlayer(player).setFlag(PlayerFlag.IS_HIDDEN, true)
@@ -74,6 +79,7 @@ class AdminMode: CommandExecutor {
     }
 
     private fun resetAdminMode(player: Player) {
+        bossBar.removePlayer(player)
         player.teleport(adminMode[player]!!)
         adminMode.remove(player)
         player.gameMode = GameMode.SURVIVAL
