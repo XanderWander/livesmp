@@ -104,6 +104,10 @@ class PlayerManager {
             }
         }
 
+        fun destroy() {
+            players.clear()
+        }
+
         fun debugShow(player: Player) {
             val logger = Main.instance.logger
 

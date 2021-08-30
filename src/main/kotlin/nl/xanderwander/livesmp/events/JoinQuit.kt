@@ -13,8 +13,11 @@ class JoinQuit: Listener {
 
     @EventHandler
     fun onJoin(e: PlayerJoinEvent) {
+
+        //First register player
         PlayerManager.addPlayer(e.player)
         StaticModule.updateTab()
+
         StaticModule.setResourcePack(e.player)
         StaticModule.joinInfo(e.player)
         PlayerManager.setFlag(e.player, WorldChange.worldNameFlag(e.player.world))
@@ -24,9 +27,11 @@ class JoinQuit: Listener {
 
     @EventHandler
     fun onQuit(e: PlayerQuitEvent) {
-        PlayerManager.remPlayer(e.player)
-        RunnableHelper.runLater(1L) { StaticModule.updateTab() }
+
         Main.instance.adminMode.forceExit(e.player)
+
+        //Last unregister player
+        PlayerManager.remPlayer(e.player)
         StaticModule.updateTab()
 
         e.quitMessage = "§c- §7${e.player.name}"

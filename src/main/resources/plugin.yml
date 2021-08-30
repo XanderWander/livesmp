@@ -20,3 +20,5 @@ commands:
     description: Admin menu
   adminmode:
     description: Use admin mode
+  logdebug:
+    description: Log all debug info
