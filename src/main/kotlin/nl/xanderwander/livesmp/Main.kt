@@ -40,7 +40,7 @@ class Main: JavaPlugin() {
     override fun onDisable() {
 
         for (player in PlayerManager.all()) {
-            adminMode.forceExit(player)
+            adminMode.forceExit(player, true)
         }
 
         sleepModule.cancel()

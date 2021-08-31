@@ -34,9 +34,9 @@ class AdminMode: CommandExecutor {
         return true
     }
 
-    fun forceExit(player: Player) {
+    fun forceExit(player: Player, pluginDisable: Boolean = false) {
         if (adminMode.contains(player)) {
-            resetAdminMode(player)
+            resetAdminMode(player, pluginDisable)
         }
     }
 
@@ -84,7 +84,7 @@ class AdminMode: CommandExecutor {
         }
     }
 
-    private fun resetAdminMode(player: Player) {
+    private fun resetAdminMode(player: Player, pluginDisable: Boolean = false) {
         bossBar.removePlayer(player)
         player.teleport(adminMode[player]!!)
         adminMode.remove(player)
@@ -94,6 +94,7 @@ class AdminMode: CommandExecutor {
         for (visiblePlayer in PlayerManager.all()) {
             visiblePlayer.showPlayer(Main.instance, player)
         }
+        if (pluginDisable) return
         for (hiddenPlayer in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
             player.hidePlayer(Main.instance, hiddenPlayer)
         }
