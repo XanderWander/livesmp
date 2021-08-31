@@ -32,7 +32,7 @@ class BreakPlace: Listener {
         if (list.contains(event.block.type)) {
             PlayerManager.all().forEach {
                 if (it.hasPermission("adminmode.notify")) {
-                    ChatFormat.send(it, "${p.name} heeft ${event.block.type.name.toLowerCase().replace("_", " ")} gemined.")
+                    ChatFormat.sendCustom(it, "${p.name} heeft ${event.block.type.name.toLowerCase().replace("_", " ")} gemined.", "")
                 }
             }
         }
