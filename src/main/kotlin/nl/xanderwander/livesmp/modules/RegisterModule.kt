@@ -1,6 +1,7 @@
 package nl.xanderwander.livesmp.modules
 
 import nl.xanderwander.livesmp.Main
+import nl.xanderwander.livesmp.commands.Debug
 import nl.xanderwander.livesmp.commands.Resourcepack
 import nl.xanderwander.livesmp.commands.Sleep
 import nl.xanderwander.livesmp.events.*
@@ -32,6 +33,7 @@ class RegisterModule {
         instance.getCommand("rrp")?.setExecutor(Resourcepack())
         instance.getCommand("slapen")?.setExecutor(Sleep())
         instance.getCommand("adminmode")?.setExecutor(instance.adminMode)
+        instance.getCommand("logdebug")?.setExecutor(Debug())
     }
 
 }

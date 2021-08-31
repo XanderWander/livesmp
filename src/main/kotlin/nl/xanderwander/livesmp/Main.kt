@@ -39,8 +39,13 @@ class Main: JavaPlugin() {
 
     override fun onDisable() {
 
+        for (player in PlayerManager.all()) {
+            adminMode.forceExit(player)
+        }
+
         sleepModule.cancel()
         sleepModule.destroy()
+        PlayerManager.destroy()
 
         logger.info("${description.name} has been disabled.")
     }

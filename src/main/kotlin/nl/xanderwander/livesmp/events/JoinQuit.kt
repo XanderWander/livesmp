@@ -12,24 +12,29 @@ import org.bukkit.event.player.PlayerQuitEvent
 class JoinQuit: Listener {
 
     @EventHandler
-    fun onJoin(event: PlayerJoinEvent) {
-        PlayerManager.addPlayer(event.player)
-        StaticModule.updateTab()
-        StaticModule.setResourcePack(event.player)
-        StaticModule.joinInfo(event.player)
-        Main.instance.adminMode.hideHiddenFor(event.player)
+    fun onJoin(e: PlayerJoinEvent) {
 
-        event.joinMessage = "§a+ §7${event.player.name}"
+        //First register player
+        PlayerManager.addPlayer(e.player)
+        StaticModule.updateTab()
+
+        StaticModule.setResourcePack(e.player)
+        StaticModule.joinInfo(e.player)
+        PlayerManager.setFlag(e.player, WorldChange.worldNameFlag(e.player.world))
+
+        e.joinMessage = "§a+ §7${e.player.name}"
     }
 
     @EventHandler
-    fun onQuit(event: PlayerQuitEvent) {
-        PlayerManager.remPlayer(event.player)
-        RunnableHelper.runLater(1L) { StaticModule.updateTab() }
-        Main.instance.adminMode.forceExit(event.player)
+    fun onQuit(e: PlayerQuitEvent) {
+
+        Main.instance.adminMode.forceExit(e.player)
+
+        //Last unregister player
+        PlayerManager.remPlayer(e.player)
         StaticModule.updateTab()
 
-        event.quitMessage = "§c- §7${event.player.name}"
+        e.quitMessage = "§c- §7${e.player.name}"
     }
 
 }
