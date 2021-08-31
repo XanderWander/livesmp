@@ -21,6 +21,7 @@ class JoinQuit: Listener {
         StaticModule.setResourcePack(e.player)
         StaticModule.joinInfo(e.player)
         PlayerManager.setFlag(e.player, WorldChange.worldNameFlag(e.player.world))
+        Main.instance.adminMode.hideHiddenFor(e.player)
 
         e.joinMessage = "§a+ §7${e.player.name}"
     }
