@@ -1,6 +1,8 @@
 package nl.xanderwander.livesmp.events
 
 import net.md_5.bungee.api.ChatColor
+import nl.xanderwander.livesmp.player.PlayerManager
+import nl.xanderwander.livesmp.utils.ChatFormat
 import nl.xanderwander.livesmp.utils.ItemUtils
 import org.bukkit.Material
 import org.bukkit.block.CreatureSpawner
@@ -24,6 +26,18 @@ class BreakPlace: Listener {
                 p.world.dropItem(b.location, i)
             }
         }
+
+        val list = arrayListOf(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.AMETHYST_CLUSTER)
+
+        if (list.contains(event.block.type)) {
+            PlayerManager.all().forEach {
+                if (it.hasPermission("adminmode.notify")) {
+                    ChatFormat.send(it, "${p.name} heeft ${event.block.type.name.toLowerCase().replace("_", " ")} gemined.")
+                }
+            }
+        }
+
+
     }
 
     @EventHandler

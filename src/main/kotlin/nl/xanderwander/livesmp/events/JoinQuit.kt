@@ -17,6 +17,7 @@ class JoinQuit: Listener {
         StaticModule.updateTab()
         StaticModule.setResourcePack(event.player)
         StaticModule.joinInfo(event.player)
+        Main.instance.adminMode.hideHiddenFor(event.player)
 
         event.joinMessage = "§a+ §7${event.player.name}"
     }

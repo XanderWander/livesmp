@@ -40,6 +40,12 @@ class AdminMode: CommandExecutor {
         }
     }
 
+    fun hideHiddenFor(player: Player) {
+        for (hiddenPlayer in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
+            player.hidePlayer(Main.instance, hiddenPlayer)
+        }
+    }
+
     private fun adminMode(player: Player, message: Boolean) {
         if (adminMode.contains(player)) {
             resetAdminMode(player)
