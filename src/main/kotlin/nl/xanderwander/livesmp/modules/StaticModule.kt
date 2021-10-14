@@ -62,11 +62,11 @@ class StaticModule {
             discord.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("§7Klik hier voor onze discord"))
             streamer.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("§7Klik hier voor de aangesloten streamers"))
 
-            help.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/help.php")
-            regels.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/regels.php")
+            help.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/help")
+            regels.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/regels")
             website.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/")
             discord.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/invite/2shhevVeXx")
-            streamer.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/streamers.php")
+            streamer.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/streamers")
 
             message.addExtra(help)
             message.addExtra(spaces1)
