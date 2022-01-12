@@ -22,3 +22,11 @@ commands:
     description: Use admin mode
   logdebug:
     description: Log all debug info
+  spawn:
+    description: Go to spawn
+  help:
+    description: help
+  regels:
+    description: regels
+  discord:
+    description: discord

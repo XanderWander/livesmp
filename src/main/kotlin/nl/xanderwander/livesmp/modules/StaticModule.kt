@@ -10,6 +10,7 @@ import nl.xanderwander.livesmp.player.PlayerFlag
 import nl.xanderwander.livesmp.player.PlayerManager
 import nl.xanderwander.livesmp.utils.ChatFormat
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 
 class StaticModule {
@@ -43,6 +44,20 @@ class StaticModule {
             }
         }
 
+        fun spawnProtect(loc: Location): Boolean {
+
+            val maxX =  75
+            val minX = -75
+            val maxZ =  75
+            val minZ = -75
+            if (loc.x > maxX) return false
+            if (loc.x < minX) return false
+            if (loc.z > maxZ) return false
+            if (loc.z < minZ) return false
+            return true
+
+        }
+
         fun joinInfo(player: Player) {
             val message = TextComponent("     ")
             val help = TextComponent("§e[Help]")
@@ -62,11 +77,11 @@ class StaticModule {
             discord.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("§7Klik hier voor onze discord"))
             streamer.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("§7Klik hier voor de aangesloten streamers"))
 
-            help.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/help.php")
-            regels.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/regels.php")
+            help.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/help")
+            regels.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/regels")
             website.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/")
             discord.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.com/invite/2shhevVeXx")
-            streamer.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/streamers.php")
+            streamer.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, "https://livesmp.com/streamers")
 
             message.addExtra(help)
             message.addExtra(spaces1)

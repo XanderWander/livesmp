@@ -1,6 +1,7 @@
 package nl.xanderwander.livesmp.events
 
 import net.md_5.bungee.api.ChatColor
+import nl.xanderwander.livesmp.modules.StaticModule.Companion.spawnProtect
 import nl.xanderwander.livesmp.player.PlayerManager
 import nl.xanderwander.livesmp.utils.ChatFormat
 import nl.xanderwander.livesmp.utils.ItemUtils
@@ -32,16 +33,16 @@ class BreakPlace: Listener {
         if (list.contains(event.block.type)) {
             PlayerManager.all().forEach {
                 if (it.hasPermission("adminmode.notify")) {
-                    ChatFormat.send(it, "${p.name} heeft ${event.block.type.name.toLowerCase().replace("_", " ")} gemined.")
+                    ChatFormat.send(it, "${p.name} heeft ${event.block.type.name.lowercase().replace("_", " ")} gemined.")
                 }
             }
         }
-
 
     }
 
     @EventHandler
     fun onBlockPlace(event: BlockPlaceEvent) {
+
         val p = event.player
         val tool = p.inventory.itemInMainHand
         if (tool.type == Material.SPAWNER) {
@@ -57,8 +58,10 @@ class BreakPlace: Listener {
                 }
             }
             event.isCancelled = true
-            p.sendMessage("${ChatColor.RED}Illigal spawner")
+            p.sendMessage("${ChatColor.RED}Illegal spawner")
         }
     }
+
+
 
 }

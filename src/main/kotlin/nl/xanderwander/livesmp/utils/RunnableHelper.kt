@@ -59,7 +59,7 @@ class RunnableHelper {
             return runAsync(0L, period) { f() }
         }
 
-        fun runIndexed(wait: Long, period: Long, f: (Int) -> Any): BukkitRunnable {
+        fun runIndexed(wait: Long, period: Long, f: (Int) -> Unit): BukkitRunnable {
             var count = 0
             val runnable = object : BukkitRunnable() {
                 override fun run() {
