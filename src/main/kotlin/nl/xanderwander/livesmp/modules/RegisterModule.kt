@@ -9,6 +9,7 @@ import nl.xanderwander.livesmp.events.*
 import nl.xanderwander.livesmp.playerflags.WorldChangeEvent
 import nl.xanderwander.livesmp.commands.sleep.EnterBedEvent
 import nl.xanderwander.livesmp.commands.sleep.SleepCommand
+import nl.xanderwander.livesmp.trails.TrailCommand
 import org.bukkit.Bukkit
 
 class RegisterModule {
@@ -48,6 +49,7 @@ class RegisterModule {
         instance.getCommand("regels")?.setExecutor(Help())
         instance.getCommand("discord")?.setExecutor(Help())
         instance.getCommand("showitem")?.setExecutor(ShowItem())
+        instance.getCommand("trail")?.setExecutor(TrailCommand())
     }
 
 }

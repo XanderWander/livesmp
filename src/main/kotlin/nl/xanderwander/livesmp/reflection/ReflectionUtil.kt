@@ -34,6 +34,20 @@ class ReflectionUtil {
             return invoke(clazz, methodName, *parameters)
         }
 
+        fun invokeTyped(obj: Any?, methodName: String, vararg parameters: Pair<Any?, Class<*>>): Any? {
+            try {
+                val parametersTyped = parameterClassesTyped(*parameters)
+                val parameterObjects = parametersTyped.first
+                val parameterClasses = parametersTyped.second
+                val clazzInstance = obj?.javaClass
+                val method = clazzInstance?.getDeclaredMethod(methodName, *parameterClasses)
+                return method?.invoke(null, *parameterObjects)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
         fun invokeTyped(className: String, methodName: String, vararg parameters: Pair<Any?, Class<*>>): Any? {
             try {
                 val parametersTyped = parameterClassesTyped(*parameters)
@@ -51,6 +65,35 @@ class ReflectionUtil {
         fun invokeTyped(className: String, classPrefix: ClassPrefix, methodName: String, vararg parameters: Pair<Any?, Class<*>>): Any? {
             val clazz = className(className, classPrefix)
             return invokeTyped(clazz, methodName, *parameters)
+        }
+
+        fun newInstance(className: String): Any? {
+            try {
+                val clazz = Class.forName(className)
+                return clazz.getConstructor().newInstance()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
+        fun newInstance(className: String, classPrefix: ClassPrefix): Any? {
+            val clazz = className(className, classPrefix)
+            return newInstance(clazz)
+        }
+
+        fun getClass(className: String): Class<*>? {
+            try {
+                return Class.forName(className)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
+        fun getClass(className: String, classPrefix: ClassPrefix): Class<*>? {
+            val clazz = className(className, classPrefix)
+            return getClass(clazz)
         }
 
         private fun parameterClasses(vararg parameters: Any?): Array<Class<*>?> {

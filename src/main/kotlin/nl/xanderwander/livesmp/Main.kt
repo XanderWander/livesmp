@@ -6,6 +6,7 @@ import nl.xanderwander.livesmp.modules.RegisterModule
 import nl.xanderwander.livesmp.modules.SleepModule
 import nl.xanderwander.livesmp.modules.StaticModule
 import nl.xanderwander.livesmp.modules.PlayerModule
+import nl.xanderwander.livesmp.trails.TrailManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
@@ -14,6 +15,7 @@ class Main: JavaPlugin() {
         lateinit var instance: Main
         lateinit var luckPermsHook: LuckPermsHook
         lateinit var version: String
+        lateinit var trailManager: TrailManager
     }
 
     private val registerModule = RegisterModule()
@@ -26,6 +28,7 @@ class Main: JavaPlugin() {
         instance = this
         version = server.javaClass.getPackage().name.split(".")[3]
         luckPermsHook = LuckPermsHook()
+        trailManager = TrailManager()
 
         registerModule.register(this)
         sleepModule.runTaskTimer(this, 0L, 1L)
@@ -46,6 +49,7 @@ class Main: JavaPlugin() {
         sleepModule.cancel()
         sleepModule.destroy()
         PlayerModule.destroy()
+        trailManager.cancel()
 
         logger.info("${description.name} has been disabled.")
     }
