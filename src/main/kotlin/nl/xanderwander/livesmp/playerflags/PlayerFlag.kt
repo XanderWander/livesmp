@@ -1,4 +1,4 @@
-package nl.xanderwander.livesmp.player
+package nl.xanderwander.livesmp.playerflags
 
 enum class PlayerFlag {
     IN_OVERWORLD,

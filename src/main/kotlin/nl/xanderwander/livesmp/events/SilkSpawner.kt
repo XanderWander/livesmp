@@ -1,9 +1,9 @@
 package nl.xanderwander.livesmp.events
 
 import net.md_5.bungee.api.ChatColor
-import nl.xanderwander.livesmp.player.PlayerManager
-import nl.xanderwander.livesmp.utils.ChatFormat
+import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.utils.ItemUtils
+import nl.xanderwander.livesmp.utils.send
 import org.bukkit.Material
 import org.bukkit.block.CreatureSpawner
 import org.bukkit.enchantments.Enchantment
@@ -13,7 +13,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 
-class BreakPlace: Listener {
+class SilkSpawner: Listener {
 
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
@@ -30,9 +30,9 @@ class BreakPlace: Listener {
         val list = arrayListOf(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.AMETHYST_CLUSTER)
 
         if (list.contains(event.block.type)) {
-            PlayerManager.all().forEach {
+            PlayerModule.all().forEach {
                 if (it.hasPermission("adminmode.notify")) {
-                    ChatFormat.sendCustom(it, "${p.name} heeft ${event.block.type.name.lowercase().replace("_", " ")} gemined.", "")
+                    it.send("${p.name} heeft ${event.block.type.name.lowercase().replace("_", " ")} gemined.")
                 }
             }
         }

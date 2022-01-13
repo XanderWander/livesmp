@@ -2,8 +2,8 @@ package nl.xanderwander.livesmp.events
 
 import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.modules.StaticModule
-import nl.xanderwander.livesmp.player.PlayerManager
-import nl.xanderwander.livesmp.utils.RunnableHelper
+import nl.xanderwander.livesmp.modules.PlayerModule
+import nl.xanderwander.livesmp.playerflags.WorldChangeEvent
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -15,13 +15,13 @@ class JoinQuit: Listener {
     fun onJoin(e: PlayerJoinEvent) {
 
         //First register player
-        PlayerManager.addPlayer(e.player)
+        PlayerModule.addPlayer(e.player)
         StaticModule.updateTab()
 
         StaticModule.setResourcePack(e.player)
         StaticModule.joinInfo(e.player)
-        PlayerManager.setFlag(e.player, WorldChange.worldNameFlag(e.player.world))
-        Main.instance.adminMode.hideHiddenFor(e.player)
+        PlayerModule.setFlag(e.player, WorldChangeEvent.worldNameFlag(e.player.world))
+        Main.instance.adminModeCommand.hideHiddenFor(e.player)
 
         e.joinMessage = "§a+ §7${e.player.name}"
     }
@@ -29,10 +29,10 @@ class JoinQuit: Listener {
     @EventHandler
     fun onQuit(e: PlayerQuitEvent) {
 
-        Main.instance.adminMode.forceExit(e.player)
+        Main.instance.adminModeCommand.forceExit(e.player)
 
         //Last unregister player
-        PlayerManager.remPlayer(e.player)
+        PlayerModule.remPlayer(e.player)
         StaticModule.updateTab()
 
         e.quitMessage = "§c- §7${e.player.name}"

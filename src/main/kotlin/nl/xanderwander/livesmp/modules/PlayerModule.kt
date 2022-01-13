@@ -1,11 +1,13 @@
-package nl.xanderwander.livesmp.player
+package nl.xanderwander.livesmp.modules
 
 import nl.xanderwander.livesmp.Main
-import nl.xanderwander.livesmp.events.WorldChange
+import nl.xanderwander.livesmp.playerflags.WorldChangeEvent
+import nl.xanderwander.livesmp.playerflags.PlayerFlag
+import nl.xanderwander.livesmp.playerflags.PlayerFlags
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class PlayerManager {
+class PlayerModule {
 
     companion object {
         private val players = hashMapOf<Player, PlayerFlags>()
@@ -100,7 +102,7 @@ class PlayerManager {
         fun initialize() {
             Bukkit.getOnlinePlayers().forEach{
                 addPlayer(it)
-                setFlag(it, WorldChange.worldNameFlag(it.world))
+                setFlag(it, WorldChangeEvent.worldNameFlag(it.world))
             }
         }
 

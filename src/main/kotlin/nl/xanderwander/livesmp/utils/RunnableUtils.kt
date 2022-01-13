@@ -3,7 +3,7 @@ package nl.xanderwander.livesmp.utils
 import nl.xanderwander.livesmp.Main
 import org.bukkit.scheduler.BukkitRunnable
 
-class RunnableHelper {
+class RunnableUtils {
 
     companion object {
 

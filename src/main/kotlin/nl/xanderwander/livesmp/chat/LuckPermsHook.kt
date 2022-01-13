@@ -1,4 +1,4 @@
-package nl.xanderwander.livesmp.modules
+package nl.xanderwander.livesmp.chat
 
 import net.luckperms.api.LuckPerms
 import net.luckperms.api.model.user.User
@@ -6,7 +6,7 @@ import nl.xanderwander.livesmp.Main
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
-class LuckPermsModule {
+class LuckPermsHook {
 
     private lateinit var luckPerms: LuckPerms
 

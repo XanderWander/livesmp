@@ -1,36 +1,34 @@
 package nl.xanderwander.livesmp
 
-import net.luckperms.api.LuckPerms
-import org.bukkit.Bukkit
-import nl.xanderwander.livesmp.modules.LuckPermsModule
-import nl.xanderwander.livesmp.commands.AdminMode
+import nl.xanderwander.livesmp.chat.LuckPermsHook
+import nl.xanderwander.livesmp.commands.adminmode.AdminModeCommand
 import nl.xanderwander.livesmp.modules.RegisterModule
 import nl.xanderwander.livesmp.modules.SleepModule
 import nl.xanderwander.livesmp.modules.StaticModule
-import nl.xanderwander.livesmp.player.PlayerManager
+import nl.xanderwander.livesmp.modules.PlayerModule
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main: JavaPlugin() {
 
     companion object {
         lateinit var instance: Main
-        lateinit var luckPermsModule: LuckPermsModule
+        lateinit var luckPermsHook: LuckPermsHook
     }
 
     private val registerModule = RegisterModule()
 
     val sleepModule = SleepModule()
-    val adminMode = AdminMode()
+    val adminModeCommand = AdminModeCommand()
 
     override fun onEnable() {
 
         instance = this
-        luckPermsModule = LuckPermsModule()
+        luckPermsHook = LuckPermsHook()
 
         registerModule.register(this)
         sleepModule.runTaskTimer(this, 0L, 1L)
 
-        PlayerManager.initialize()
+        PlayerModule.initialize()
         StaticModule.updateTab()
 
         logger.info("${description.name} V${description.version} has been enabled.")
@@ -39,13 +37,13 @@ class Main: JavaPlugin() {
 
     override fun onDisable() {
 
-        for (player in PlayerManager.all()) {
-            adminMode.forceExit(player, true)
+        for (player in PlayerModule.all()) {
+            adminModeCommand.forceExit(player, true)
         }
 
         sleepModule.cancel()
         sleepModule.destroy()
-        PlayerManager.destroy()
+        PlayerModule.destroy()
 
         logger.info("${description.name} has been disabled.")
     }

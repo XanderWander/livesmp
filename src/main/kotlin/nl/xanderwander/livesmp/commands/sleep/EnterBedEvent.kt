@@ -1,10 +1,10 @@
-package nl.xanderwander.livesmp.events
+package nl.xanderwander.livesmp.commands.sleep
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerBedEnterEvent
 
-class PlayerSleep: Listener {
+class EnterBedEvent: Listener {
 
     @EventHandler
     fun onSleep(event: PlayerBedEnterEvent) {

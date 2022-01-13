@@ -1,9 +1,9 @@
 package nl.xanderwander.livesmp.modules
 
-import nl.xanderwander.livesmp.player.PlayerFlag
-import nl.xanderwander.livesmp.player.PlayerManager
-import nl.xanderwander.livesmp.utils.ChatFormat
-import nl.xanderwander.livesmp.utils.RunnableHelper
+import nl.xanderwander.livesmp.playerflags.PlayerFlag
+import nl.xanderwander.livesmp.utils.RunnableUtils
+import nl.xanderwander.livesmp.utils.chatPrefix
+import nl.xanderwander.livesmp.utils.send
 import org.bukkit.Bukkit
 import org.bukkit.Statistic
 import org.bukkit.World
@@ -20,9 +20,9 @@ class SleepModule: BukkitRunnable() {
 
     override fun run() {
 
-        val sleep = PlayerManager.count(PlayerFlag.IS_SLEEPING)
-        val visiblePlayers = PlayerManager.reverseMatch(PlayerFlag.IS_HIDDEN)
-        val inOverworld = PlayerManager.match(visiblePlayers, PlayerFlag.IN_OVERWORLD)
+        val sleep = PlayerModule.count(PlayerFlag.IS_SLEEPING)
+        val visiblePlayers = PlayerModule.reverseMatch(PlayerFlag.IS_HIDDEN)
+        val inOverworld = PlayerModule.match(visiblePlayers, PlayerFlag.IN_OVERWORLD)
         val inWorld = ceil(inOverworld.size / 2.0).toInt()
         if (inWorld == 0) return
         val playerObject = inOverworld[0]
@@ -30,12 +30,12 @@ class SleepModule: BukkitRunnable() {
         if (!isNight(playerObject.world)) {
             if (playerObject.world.time <= 1L) {
                 bossBar.color = BarColor.GREEN
-                RunnableHelper.runLater(100L) {
+                RunnableUtils.runLater(100L) {
                     bossBar.progress = 0.0
                     bossBar.color = BarColor.WHITE
                     bossBar.removeAll()
                 }
-                PlayerManager.setAllFlags(PlayerFlag.IS_SLEEPING, false)
+                PlayerModule.setAllFlags(PlayerFlag.IS_SLEEPING, false)
             }
             return
         }
@@ -47,9 +47,9 @@ class SleepModule: BukkitRunnable() {
         if (progress == 1.0) {
             makeDay(inOverworld, playerObject.world)
         } else {
-            PlayerManager.match(PlayerFlag.IN_OVERWORLD).forEach { bossBar.addPlayer(it) }
-            PlayerManager.reverseMatch(PlayerFlag.IN_OVERWORLD).forEach { bossBar.removePlayer(it) }
-            PlayerManager.all().forEach { if (it.isSleeping) { PlayerManager.setFlag(it, PlayerFlag.IS_SLEEPING) } }
+            PlayerModule.match(PlayerFlag.IN_OVERWORLD).forEach { bossBar.addPlayer(it) }
+            PlayerModule.reverseMatch(PlayerFlag.IN_OVERWORLD).forEach { bossBar.removePlayer(it) }
+            PlayerModule.all().forEach { if (it.isSleeping) { PlayerModule.setFlag(it, PlayerFlag.IS_SLEEPING) } }
         }
 
     }
@@ -59,9 +59,9 @@ class SleepModule: BukkitRunnable() {
     }
 
     fun isFull(): Boolean {
-        val sleep = PlayerManager.count(PlayerFlag.IS_SLEEPING)
+        val sleep = PlayerModule.count(PlayerFlag.IS_SLEEPING)
         val players = arrayListOf<Player>()
-        for (player in PlayerManager.reverseMatch(PlayerFlag.IS_HIDDEN)) {
+        for (player in PlayerModule.reverseMatch(PlayerFlag.IS_HIDDEN)) {
             if (player.world.name != "world") continue
             players.add(player)
         }
@@ -72,11 +72,11 @@ class SleepModule: BukkitRunnable() {
     }
 
     private fun makeDay(players: ArrayList<Player>, world: World) {
-        PlayerManager.match(PlayerFlag.IS_SLEEPING).forEach { it.setStatistic(Statistic.TIME_SINCE_REST, 0) }
+        PlayerModule.match(PlayerFlag.IS_SLEEPING).forEach { it.setStatistic(Statistic.TIME_SINCE_REST, 0) }
         world.time = 0L
         world.isThundering = false
         world.setStorm(false)
-        ChatFormat.send(players, "Meer dan 50% wilde slapen, dus het is nu dag.")
+        players.forEach {  it.send("Meer dan 50% wilde slapen, dus het is nu dag.") }
     }
 
     fun isNight(world: World): Boolean {

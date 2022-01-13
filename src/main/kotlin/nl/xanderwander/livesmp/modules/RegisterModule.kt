@@ -1,8 +1,14 @@
 package nl.xanderwander.livesmp.modules
 
 import nl.xanderwander.livesmp.Main
+import nl.xanderwander.livesmp.commands.adminmode.TabCompleteEvent
+import nl.xanderwander.livesmp.chat.ChatEvent
 import nl.xanderwander.livesmp.commands.*
+import nl.xanderwander.livesmp.commands.dev.Debug
 import nl.xanderwander.livesmp.events.*
+import nl.xanderwander.livesmp.playerflags.WorldChangeEvent
+import nl.xanderwander.livesmp.commands.sleep.EnterBedEvent
+import nl.xanderwander.livesmp.commands.sleep.SleepCommand
 import org.bukkit.Bukkit
 
 class RegisterModule {
@@ -13,32 +19,35 @@ class RegisterModule {
     }
 
     private fun registerEvents(instance: Main) {
-        Bukkit.getPluginManager().registerEvents(BreakPlace(), instance)
-        Bukkit.getPluginManager().registerEvents(ChatEvent(), instance)
-        Bukkit.getPluginManager().registerEvents(EntityChangeBlock(), instance)
-        Bukkit.getPluginManager().registerEvents(EntityDeath(), instance)
+        // package nl.xanderwander.livesmp.events
+        Bukkit.getPluginManager().registerEvents(ElytraArmor(), instance)
         Bukkit.getPluginManager().registerEvents(JoinQuit(), instance)
-        Bukkit.getPluginManager().registerEvents(PlayerInteractEvent(), instance)
-        Bukkit.getPluginManager().registerEvents(PlayerSleep(), instance)
-        Bukkit.getPluginManager().registerEvents(PrepareAnvil(), instance)
-        Bukkit.getPluginManager().registerEvents(ServerPing(), instance)
+        Bukkit.getPluginManager().registerEvents(MOTD(), instance)
+        Bukkit.getPluginManager().registerEvents(SilkSpawner(), instance)
         Bukkit.getPluginManager().registerEvents(SpawnProtect(), instance)
-        Bukkit.getPluginManager().registerEvents(TabComplete(), instance)
-        Bukkit.getPluginManager().registerEvents(ToolBreak(), instance)
-        Bukkit.getPluginManager().registerEvents(WorldChange(), instance)
+        Bukkit.getPluginManager().registerEvents(ToolProtect(), instance)
+        Bukkit.getPluginManager().registerEvents(WorldProtect(), instance)
+
+        // other events
+        Bukkit.getPluginManager().registerEvents(ChatEvent(), instance) // package nl.xanderwander.livesmp.chat
+        Bukkit.getPluginManager().registerEvents(TabCompleteEvent(), instance) // package nl.xanderwander.livesmp.commands.adminmode
+        Bukkit.getPluginManager().registerEvents(EnterBedEvent(), instance) // package nl.xanderwander.livesmp.commands.sleep
+        Bukkit.getPluginManager().registerEvents(WorldChangeEvent(), instance) // package nl.xanderwander.livesmp.playerflags
+
     }
 
     private fun registerCommands(instance: Main) {
         instance.getCommand("resourcepack")?.setExecutor(Resourcepack())
         instance.getCommand("rp")?.setExecutor(Resourcepack())
         instance.getCommand("rrp")?.setExecutor(Resourcepack())
-        instance.getCommand("slapen")?.setExecutor(Sleep())
-        instance.getCommand("adminmode")?.setExecutor(instance.adminMode)
+        instance.getCommand("slapen")?.setExecutor(SleepCommand())
+        instance.getCommand("adminmode")?.setExecutor(instance.adminModeCommand)
         instance.getCommand("logdebug")?.setExecutor(Debug())
         instance.getCommand("spawn")?.setExecutor(Spawn())
         instance.getCommand("help")?.setExecutor(Help())
         instance.getCommand("regels")?.setExecutor(Help())
         instance.getCommand("discord")?.setExecutor(Help())
+        instance.getCommand("showitem")?.setExecutor(ShowItem())
     }
 
 }

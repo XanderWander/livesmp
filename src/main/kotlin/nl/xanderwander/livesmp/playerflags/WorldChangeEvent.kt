@@ -1,15 +1,13 @@
-package nl.xanderwander.livesmp.events
+package nl.xanderwander.livesmp.playerflags
 
-import nl.xanderwander.livesmp.player.PlayerFlag
-import nl.xanderwander.livesmp.player.PlayerManager
-import org.bukkit.Bukkit
+import nl.xanderwander.livesmp.modules.PlayerModule
 import org.bukkit.World
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerChangedWorldEvent
 import java.lang.IllegalArgumentException
 
-class WorldChange: Listener {
+class WorldChangeEvent: Listener {
 
     companion object {
         fun worldNameFlag(world: World): PlayerFlag {
@@ -25,8 +23,8 @@ class WorldChange: Listener {
 
     @EventHandler
     fun onWorldChange(e: PlayerChangedWorldEvent) {
-        PlayerManager.setFlag(e.player, worldNameFlag(e.from), false)
-        PlayerManager.setFlag(e.player, worldNameFlag(e.player.world))
+        PlayerModule.setFlag(e.player, worldNameFlag(e.from), false)
+        PlayerModule.setFlag(e.player, worldNameFlag(e.player.world))
     }
 
 }

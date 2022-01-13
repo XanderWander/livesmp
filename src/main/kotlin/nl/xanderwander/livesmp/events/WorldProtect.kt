@@ -3,11 +3,34 @@ package nl.xanderwander.livesmp.events
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
+import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
+import org.bukkit.event.entity.EntityChangeBlockEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.player.PlayerInteractEvent
 
-class EntityDeath: Listener {
+class WorldProtect: Listener {
+
+    @EventHandler
+    fun onEntityChangeBlock(event: EntityChangeBlockEvent) {
+        if (event.entityType == EntityType.ENDERMAN) {
+            event.isCancelled = true
+        }
+    }
+
+    @EventHandler
+    fun onPlayerInteract(event: PlayerInteractEvent) {
+        val block = event.clickedBlock
+        if (block != null) {
+            if (block.type == Material.FARMLAND) {
+                if (event.action == Action.PHYSICAL) {
+                    event.isCancelled = true
+                }
+            }
+        }
+    }
 
     @EventHandler
     fun onEntityDeath(event: EntityDeathEvent) {

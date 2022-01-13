@@ -1,10 +1,10 @@
-package nl.xanderwander.livesmp.commands
+package nl.xanderwander.livesmp.commands.adminmode
 
 import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.modules.StaticModule
-import nl.xanderwander.livesmp.player.PlayerFlag
-import nl.xanderwander.livesmp.player.PlayerManager
-import nl.xanderwander.livesmp.utils.ChatFormat
+import nl.xanderwander.livesmp.playerflags.PlayerFlag
+import nl.xanderwander.livesmp.modules.PlayerModule
+import nl.xanderwander.livesmp.utils.send
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Location
@@ -15,7 +15,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class AdminMode: CommandExecutor {
+class AdminModeCommand: CommandExecutor {
 
     private val adminMode = hashMapOf<Player, Location>()
     private val bossBar = Bukkit.createBossBar("§4AdminMode", BarColor.RED, BarStyle.SOLID)
@@ -41,7 +41,7 @@ class AdminMode: CommandExecutor {
     }
 
     fun hideHiddenFor(player: Player) {
-        for (hiddenPlayer in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
+        for (hiddenPlayer in PlayerModule.match(PlayerFlag.IS_HIDDEN)) {
             player.hidePlayer(Main.instance, hiddenPlayer)
         }
     }
@@ -62,10 +62,10 @@ class AdminMode: CommandExecutor {
     }
 
     private fun fakeMessage(msg: String, name: String) {
-        for (visiblePlayer in PlayerManager.reverseMatch(PlayerFlag.IS_HIDDEN)) {
+        for (visiblePlayer in PlayerModule.reverseMatch(PlayerFlag.IS_HIDDEN)) {
             visiblePlayer.sendMessage("$msg §7$name")
         }
-        for (hiddenPlayer in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
+        for (hiddenPlayer in PlayerModule.match(PlayerFlag.IS_HIDDEN)) {
             hiddenPlayer.sendMessage("$msg §8[Hidden] §7$name")
         }
     }
@@ -74,12 +74,12 @@ class AdminMode: CommandExecutor {
         bossBar.addPlayer(player)
         adminMode[player] = player.location
         player.gameMode = GameMode.SPECTATOR
-        PlayerManager.getPlayer(player).setFlag(PlayerFlag.IS_HIDDEN, true)
-        ChatFormat.sendCustom(player, "Admin mode is aan", "")
-        for (visiblePlayer in PlayerManager.reverseMatch(PlayerFlag.IS_HIDDEN)) {
+        PlayerModule.getPlayer(player).setFlag(PlayerFlag.IS_HIDDEN, true)
+        player.send("Admin mode is aan")
+        for (visiblePlayer in PlayerModule.reverseMatch(PlayerFlag.IS_HIDDEN)) {
             visiblePlayer.hidePlayer(Main.instance, player)
         }
-        for (hiddenPlayer in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
+        for (hiddenPlayer in PlayerModule.match(PlayerFlag.IS_HIDDEN)) {
             player.showPlayer(Main.instance, hiddenPlayer)
         }
     }
@@ -89,13 +89,13 @@ class AdminMode: CommandExecutor {
         player.teleport(adminMode[player]!!)
         adminMode.remove(player)
         player.gameMode = GameMode.SURVIVAL
-        PlayerManager.getPlayer(player).setFlag(PlayerFlag.IS_HIDDEN, false)
-        ChatFormat.sendCustom(player, "Admin mode is uit", "")
-        for (visiblePlayer in PlayerManager.all()) {
+        PlayerModule.getPlayer(player).setFlag(PlayerFlag.IS_HIDDEN, false)
+        player.send("Admin mode is uit")
+        for (visiblePlayer in PlayerModule.all()) {
             visiblePlayer.showPlayer(Main.instance, player)
         }
         if (pluginDisable) return
-        for (hiddenPlayer in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
+        for (hiddenPlayer in PlayerModule.match(PlayerFlag.IS_HIDDEN)) {
             player.hidePlayer(Main.instance, hiddenPlayer)
         }
     }

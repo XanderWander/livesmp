@@ -1,24 +1,23 @@
-package nl.xanderwander.livesmp.events
+package nl.xanderwander.livesmp.commands.adminmode
 
-import nl.xanderwander.livesmp.Main
-import nl.xanderwander.livesmp.player.PlayerFlag
-import nl.xanderwander.livesmp.player.PlayerManager
+import nl.xanderwander.livesmp.playerflags.PlayerFlag
+import nl.xanderwander.livesmp.modules.PlayerModule
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.server.TabCompleteEvent
 
-class TabComplete: Listener {
+class TabCompleteEvent: Listener {
 
     @EventHandler
     fun onTabComplete(event: TabCompleteEvent) {
 
         if (event.sender is Player) {
-            if (!PlayerManager.getFlag(event.sender as Player, PlayerFlag.IS_HIDDEN)) {
+            if (!PlayerModule.getFlag(event.sender as Player, PlayerFlag.IS_HIDDEN)) {
                 val completions = event.completions
                 val changed = arrayListOf<String>()
                 for (completion in completions) {
-                    for (player in PlayerManager.match(PlayerFlag.IS_HIDDEN)) {
+                    for (player in PlayerModule.match(PlayerFlag.IS_HIDDEN)) {
                         if (player.name == completion) {
                             continue
                         }

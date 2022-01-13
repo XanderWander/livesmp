@@ -9,7 +9,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.inventory.meta.Damageable
 
-class ToolBreak: Listener {
+class ToolProtect: Listener {
 
     @EventHandler
     fun onToolBreak(event: BlockBreakEvent) {

@@ -6,11 +6,8 @@ import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.chat.hover.content.Text
-import nl.xanderwander.livesmp.player.PlayerFlag
-import nl.xanderwander.livesmp.player.PlayerManager
-import nl.xanderwander.livesmp.utils.ChatFormat
-import org.bukkit.Bukkit
-import org.bukkit.Location
+import nl.xanderwander.livesmp.playerflags.PlayerFlag
+import nl.xanderwander.livesmp.utils.prefix
 import org.bukkit.entity.Player
 
 class StaticModule {
@@ -27,13 +24,13 @@ class StaticModule {
         }
 
         fun updateTab() {
-            for (p: Player in PlayerManager.all()) {
-                val t = PlayerManager.reverseCount(PlayerFlag.IS_HIDDEN)
+            for (p: Player in PlayerModule.all()) {
+                val t = PlayerModule.reverseCount(PlayerFlag.IS_HIDDEN)
                 val red = ChatColor.of("#ff0000")
                 val mul = if (t != 1) listOf("zijn", "spelers") else listOf("is", "speler")
                 p.setPlayerListHeaderFooter(
                     "\n" +
-                            "${ChatFormat.prefix}\n" +
+                            "${prefix}\n" +
                             "",
                     "\n" +
                             "§7 Er ${mul[0]} op dit moment ${red}$t §7${mul[1]} online. \n" +
@@ -42,20 +39,6 @@ class StaticModule {
                             ""
                 )
             }
-        }
-
-        fun spawnProtect(loc: Location): Boolean {
-
-            val maxX =  75
-            val minX = -75
-            val maxZ =  75
-            val minZ = -75
-            if (loc.x > maxX) return false
-            if (loc.x < minX) return false
-            if (loc.z > maxZ) return false
-            if (loc.z < minZ) return false
-            return true
-
         }
 
         fun joinInfo(player: Player) {
@@ -96,7 +79,7 @@ class StaticModule {
 
             player.sendMessage("§8§l§m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯")
             player.sendMessage("")
-            player.sendMessage("      §7Welkom op de ${ChatFormat.prefix}§r §7server")
+            player.sendMessage("      §7Welkom op de ${prefix}§r §7server")
             player.sendMessage("")
             player.spigot().sendMessage(ChatMessageType.CHAT, message)
             player.sendMessage("")

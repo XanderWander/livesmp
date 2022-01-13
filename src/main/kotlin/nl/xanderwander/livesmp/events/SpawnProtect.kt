@@ -1,9 +1,6 @@
 package nl.xanderwander.livesmp.events
 
-import nl.xanderwander.livesmp.modules.StaticModule.Companion.spawnProtect
-import nl.xanderwander.livesmp.player.PlayerManager
 import org.bukkit.*
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.Firework
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
@@ -13,10 +10,8 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockExplodeEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.EntitySpawnEvent
-import org.bukkit.event.player.PlayerInteractEvent
 import org.spigotmc.event.player.PlayerSpawnLocationEvent
 
 class SpawnProtect: Listener {
@@ -64,7 +59,7 @@ class SpawnProtect: Listener {
     @EventHandler
     fun onBreak(event: BlockBreakEvent) {
         if (event.player.gameMode != GameMode.CREATIVE) {
-            if (spawnProtect(event.player.location)) {
+            if (spawnProtect(event.block.location)) {
                 event.isCancelled = true
             }
         }
@@ -73,19 +68,24 @@ class SpawnProtect: Listener {
     @EventHandler
     fun onPlace(event: BlockPlaceEvent) {
         if (event.player.gameMode != GameMode.CREATIVE) {
-            if (spawnProtect(event.player.location)) {
+            if (spawnProtect(event.block.location)) {
                 event.isCancelled = true
             }
         }
     }
 
-    @EventHandler
-    fun onPlace(event: PlayerInteractEvent) {
-        if (event.player.gameMode != GameMode.CREATIVE) {
-            if (spawnProtect(event.player.location)) {
-                event.isCancelled = true
-            }
-        }
+    private fun spawnProtect(loc: Location): Boolean {
+
+        val maxX =  75
+        val minX = -75
+        val maxZ =  75
+        val minZ = -75
+        if (loc.x > maxX) return false
+        if (loc.x < minX) return false
+        if (loc.z > maxZ) return false
+        if (loc.z < minZ) return false
+        return true
+
     }
 
 }

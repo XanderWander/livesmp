@@ -10,7 +10,7 @@ import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
-class PrepareAnvil: Listener {
+class ElytraArmor: Listener {
 
     @EventHandler
     fun onAnvil(event: PrepareAnvilEvent) {
