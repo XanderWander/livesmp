@@ -67,6 +67,7 @@ class ShowItem: CommandExecutor {
             val hoverEventComponents = arrayOf<BaseComponent>(
                 TextComponent("{id:\"minecraft:${item.type.toString().lowercase()}\",Count:${item.amount}b,tag:$jsonData}")
             )
+            @Suppress("DEPRECATION")
             text.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_ITEM, hoverEventComponents)
 
         } catch (e: Exception) {
