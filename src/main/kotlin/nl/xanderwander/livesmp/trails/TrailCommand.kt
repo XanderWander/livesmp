@@ -1,0 +1,19 @@
+package nl.xanderwander.livesmp.trails
+
+import org.bukkit.command.Command
+import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
+
+class TrailCommand: CommandExecutor {
+
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (sender is Player) {
+            when (args[0]) {
+                "start" -> TrailManager.instance.registerTrail(sender, TrailType.COPPER)
+                "stop" -> TrailManager.instance.stopTrail(sender)
+            }
+        }
+    }
+
+}

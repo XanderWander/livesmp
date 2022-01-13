@@ -7,7 +7,10 @@ import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.chat.hover.content.Text
 import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.modules.PlayerModule
+import nl.xanderwander.livesmp.reflection.ClassPrefix
+import nl.xanderwander.livesmp.reflection.ReflectionUtil
 import nl.xanderwander.livesmp.utils.ItemUtils
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -54,15 +57,11 @@ class ShowItem: CommandExecutor {
         }
 
         try {
-            val nms = Main.instance.server.javaClass.getPackage().name.split(".")[3]
-            val craftItemStackClass = Class.forName("org.bukkit.craftbukkit.$nms.inventory.CraftItemStack")
-            val itemStack = craftItemStackClass.getDeclaredMethod("asNMSCopy", ItemStack::class.java).invoke(null, item)
-            val itemStackClass = itemStack::class.java
-            val nbtTagCompound = itemStackClass.getDeclaredMethod("s").invoke(itemStack)
+            val itemStack = ReflectionUtil.invokeTyped("inventory.CraftItemStack", ClassPrefix.OBC, "asNMSCopy", Pair(item, ItemStack::class.java))
+            val nbtTagCompound = ReflectionUtil.invoke(itemStack, "s")
             var jsonData = "{}"
             if (nbtTagCompound != null) {
-                val nbtTagCompoundClass = nbtTagCompound::class.java
-                jsonData = nbtTagCompoundClass.getDeclaredMethod("toString").invoke(nbtTagCompound) as String
+                jsonData = ReflectionUtil.invoke(nbtTagCompound, "toString") as String
             }
             val hoverEventComponents = arrayOf<BaseComponent>(
                 TextComponent("{id:\"minecraft:${item.type.toString().lowercase()}\",Count:${item.amount}b,tag:$jsonData}")

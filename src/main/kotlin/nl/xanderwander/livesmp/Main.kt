@@ -13,6 +13,7 @@ class Main: JavaPlugin() {
     companion object {
         lateinit var instance: Main
         lateinit var luckPermsHook: LuckPermsHook
+        lateinit var version: String
     }
 
     private val registerModule = RegisterModule()
@@ -23,6 +24,7 @@ class Main: JavaPlugin() {
     override fun onEnable() {
 
         instance = this
+        version = server.javaClass.getPackage().name.split(".")[3]
         luckPermsHook = LuckPermsHook()
 
         registerModule.register(this)
