@@ -15,14 +15,19 @@ import kotlin.math.sin
 class TrailManager: BukkitRunnable() {
 
     init {
-        this.runTaskTimerAsynchronously(Main.instance, 10L, 1L)
+        this.runTaskTimer(Main.instance, 10L, 5L)
     }
 
     private val trails = hashMapOf<Player, TrailItem>()
+    val removeIDS = arrayListOf<Int>()
 
     fun registerTrail(player: Player, trail: TrailType) {
         when(trail) {
             TrailType.COPPER -> trails[player] = TrailItem(ItemStack(Material.COPPER_INGOT))
+            TrailType.IRON -> trails[player] = TrailItem(ItemStack(Material.IRON_INGOT))
+            TrailType.GOLD -> trails[player] = TrailItem(ItemStack(Material.GOLD_INGOT))
+            TrailType.DIAMOND -> trails[player] = TrailItem(ItemStack(Material.DIAMOND))
+            TrailType.NETHERITE -> trails[player] = TrailItem(ItemStack(Material.NETHERITE_INGOT))
         }
     }
 
@@ -37,7 +42,13 @@ class TrailManager: BukkitRunnable() {
     }
 
     override fun run() {
-        trails.forEach { (player, trail) -> trailTick(player, trail) }
+        trails.forEach { (player, trail) ->
+            if (player.isOnline) {
+                trailTick(player, trail)
+            } else {
+                stopTrail(player)
+            }
+        }
     }
 
 }

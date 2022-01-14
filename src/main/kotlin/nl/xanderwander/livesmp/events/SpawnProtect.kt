@@ -12,6 +12,8 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.EntitySpawnEvent
+import org.bukkit.event.player.PlayerBucketEmptyEvent
+import org.bukkit.event.player.PlayerBucketFillEvent
 import org.spigotmc.event.player.PlayerSpawnLocationEvent
 
 class SpawnProtect: Listener {
@@ -67,6 +69,24 @@ class SpawnProtect: Listener {
 
     @EventHandler
     fun onPlace(event: BlockPlaceEvent) {
+        if (event.player.gameMode != GameMode.CREATIVE) {
+            if (spawnProtect(event.block.location)) {
+                event.isCancelled = true
+            }
+        }
+    }
+
+    @EventHandler
+    fun onBucketPlace(event: PlayerBucketEmptyEvent) {
+        if (event.player.gameMode != GameMode.CREATIVE) {
+            if (spawnProtect(event.block.location)) {
+                event.isCancelled = true
+            }
+        }
+    }
+
+    @EventHandler
+    fun onBucketFill(event: PlayerBucketFillEvent) {
         if (event.player.gameMode != GameMode.CREATIVE) {
             if (spawnProtect(event.block.location)) {
                 event.isCancelled = true

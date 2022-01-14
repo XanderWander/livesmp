@@ -1,5 +1,9 @@
 package nl.xanderwander.livesmp.trails
 
 enum class TrailType {
-    COPPER
+    COPPER,
+    IRON,
+    GOLD,
+    DIAMOND,
+    NETHERITE,
 }

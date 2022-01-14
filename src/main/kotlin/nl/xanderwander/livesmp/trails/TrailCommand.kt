@@ -11,7 +11,18 @@ class TrailCommand: CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender is Player) {
             when (args[0]) {
-                "start" -> Main.trailManager.registerTrail(sender, TrailType.COPPER)
+                "start" -> {
+                    if (args.size >= 2) {
+                        val trailType = try {
+                            TrailType.valueOf(args[1].uppercase())
+                        } catch (e: IllegalArgumentException) {
+                            TrailType.COPPER
+                        }
+                        Main.trailManager.registerTrail(sender, trailType)
+                    } else {
+                        Main.trailManager.registerTrail(sender, TrailType.COPPER)
+                    }
+                }
                 "stop" -> Main.trailManager.stopTrail(sender)
             }
         }
