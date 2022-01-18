@@ -1,5 +1,6 @@
 package nl.xanderwander.livesmp.events
 
+import nl.xanderwander.livesmp.utils.send
 import org.bukkit.*
 import org.bukkit.entity.Firework
 import org.bukkit.entity.Item
@@ -14,6 +15,7 @@ import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.player.PlayerBucketEmptyEvent
 import org.bukkit.event.player.PlayerBucketFillEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.spigotmc.event.player.PlayerSpawnLocationEvent
 
 class SpawnProtect: Listener {
@@ -92,6 +94,20 @@ class SpawnProtect: Listener {
                 event.isCancelled = true
             }
         }
+    }
+
+    @EventHandler
+    fun onInteractBlock(event: PlayerInteractEvent) {
+        if (event.player.gameMode != GameMode.CREATIVE) {
+            if (event.hasBlock() && event.clickedBlock!!.type.isInteractable) {
+                if (spawnProtect(event.clickedBlock!!.location)) {
+                    event.isCancelled = true
+                }
+            }
+        }
+//        if (event.player.name == "XanderWander") {
+//            event.player.send("${event.clickedBlock} \n${event.action}\n ${event.hand}\n ${event.hasBlock()}\n ${event.hasItem()}\n ${event.isBlockInHand}")
+//        }
     }
 
     private fun spawnProtect(loc: Location): Boolean {

@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
 import nl.xanderwander.livesmp.chat.LuckPermsHook
 import nl.xanderwander.livesmp.commands.adminmode.AdminModeCommand
+import nl.xanderwander.livesmp.itemprotect.InventoryStorage
 import nl.xanderwander.livesmp.modules.RegisterModule
 import nl.xanderwander.livesmp.modules.SleepModule
 import nl.xanderwander.livesmp.modules.StaticModule
@@ -26,6 +27,7 @@ class Main: JavaPlugin() {
         lateinit var luckPermsHook: LuckPermsHook
         lateinit var version: String
         lateinit var trailManager: TrailManager
+        val inventoryStorage = InventoryStorage()
     }
 
     private val registerModule = RegisterModule()

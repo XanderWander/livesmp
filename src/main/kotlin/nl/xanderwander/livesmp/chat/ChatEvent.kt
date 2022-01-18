@@ -18,7 +18,8 @@ class ChatEvent: Listener {
 
         val player = event.player
         val prefix = Main.luckPermsHook.playerPrefix(player)
-        val message = "$prefix §7${player.name} §9» §f${StringUtils.removeIfFirst(event.message, "!")}"
+        val preMessage = "$prefix §7${player.name} §9» §f${StringUtils.removeIfFirst(event.message, "!")}"
+        val message = ChatReplace().replace(preMessage)
 
         if (PlayerModule.getFlag(player, PlayerFlag.IS_HIDDEN) && !event.message.startsWith("!")) {
             for (receiver in PlayerModule.match(PlayerFlag.IS_HIDDEN)) {

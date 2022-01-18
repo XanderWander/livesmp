@@ -1,19 +1,18 @@
 package nl.xanderwander.livesmp.commands.dev
 import net.md_5.bungee.api.ChatColor
 import nl.xanderwander.livesmp.Main
+import nl.xanderwander.livesmp.itemprotect.InventoryStorage
 import nl.xanderwander.livesmp.playerflags.PlayerFlag
 import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.utils.RunnableUtils
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.SoundCategory
-import org.bukkit.World
+import org.bukkit.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 
 const val spawn_protect_size = 20.0
@@ -30,6 +29,17 @@ class Debug: CommandExecutor {
 
         if (args.isNotEmpty() && args[0] == "resetserver") {
             resetServer()
+        }
+
+        if (args.isNotEmpty() && args[0] == "test") {
+            if (sender is Player) {
+                val s = InventoryStorage()
+                s.storeInventory(sender)
+                for (i in 0 until 36) {
+                    sender.inventory.setItem(i, ItemStack(Material.AIR))
+                }
+                s.loadInventory(sender)
+            }
         }
 
         if (args.isNotEmpty() && args[0] == "spawn") {

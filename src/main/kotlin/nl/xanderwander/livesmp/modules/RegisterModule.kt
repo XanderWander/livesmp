@@ -9,6 +9,7 @@ import nl.xanderwander.livesmp.events.*
 import nl.xanderwander.livesmp.playerflags.WorldChangeEvent
 import nl.xanderwander.livesmp.commands.sleep.EnterBedEvent
 import nl.xanderwander.livesmp.commands.sleep.SleepCommand
+import nl.xanderwander.livesmp.itemprotect.GameModeEvent
 import nl.xanderwander.livesmp.trails.TrailCommand
 import org.bukkit.Bukkit
 
@@ -33,6 +34,7 @@ class RegisterModule {
         Bukkit.getPluginManager().registerEvents(ChatEvent(), instance) // package nl.xanderwander.livesmp.chat
         Bukkit.getPluginManager().registerEvents(TabCompleteEvent(), instance) // package nl.xanderwander.livesmp.commands.adminmode
         Bukkit.getPluginManager().registerEvents(EnterBedEvent(), instance) // package nl.xanderwander.livesmp.commands.sleep
+        Bukkit.getPluginManager().registerEvents(GameModeEvent(), instance) // package nl.xanderwander.livesmp.itemprotect
         Bukkit.getPluginManager().registerEvents(WorldChangeEvent(), instance) // package nl.xanderwander.livesmp.playerflags
 
     }

@@ -25,12 +25,7 @@ class ItemUtils {
         }
 
         fun formatTypeAsName(material: Material): String {
-            val words = material.name.lowercase().replace("_", " ").split(" ")
-            val final = arrayListOf<String>()
-            for (word in words) {
-                final.add(word[0].uppercase()+word.substring(1))
-            }
-            return final.joinToString(" ")
+            return StringUtils.capitalizeFirstLetters(material.name.replace("_", " "))
         }
 
     }

@@ -1,5 +1,7 @@
 package nl.xanderwander.livesmp.modules
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.ClickEvent
@@ -7,20 +9,34 @@ import net.md_5.bungee.api.chat.HoverEvent
 import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.chat.hover.content.Text
 import nl.xanderwander.livesmp.playerflags.PlayerFlag
+import nl.xanderwander.livesmp.utils.RunnableUtils
 import nl.xanderwander.livesmp.utils.prefix
 import org.bukkit.entity.Player
+import java.net.URL
 
 class StaticModule {
 
     companion object {
-        private const val url = "http://resourcepacks.hyparks.com/latest.php"
+        private const val version_url = "http://resourcepacks.hyparks.com/latest.php"
+        private const val base_url = "http://resourcepacks.hyparks.com/"
+
+        private fun getZipFile(): String {
+            val text = URL(version_url).readText()
+            val json = Gson().fromJson(text, JsonObject::class.java)
+            val zip = json.get("file").asString
+            return base_url + zip
+        }
 
         fun setResourcePack(p: Player) {
-            p.setResourcePack(url)
+            RunnableUtils.doAsync {
+                p.setResourcePack(getZipFile())
+            }
         }
 
         fun resetResourcePack(p: Player) {
-            p.setResourcePack("http://reset.com/")
+            RunnableUtils.doAsync {
+                p.setResourcePack("https://reset.com/")
+            }
         }
 
         fun updateTab() {

@@ -3,6 +3,7 @@ package nl.xanderwander.livesmp.events
 import net.md_5.bungee.api.ChatColor
 import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.utils.ItemUtils
+import nl.xanderwander.livesmp.utils.StringUtils
 import nl.xanderwander.livesmp.utils.send
 import org.bukkit.Material
 import org.bukkit.block.CreatureSpawner
@@ -22,7 +23,7 @@ class SilkSpawner: Listener {
             val b = event.block
             if (b.type == Material.SPAWNER) {
                 val type = (b.state as CreatureSpawner).spawnedType
-                val i = ItemUtils.newItem(Material.SPAWNER, "${ChatColor.YELLOW}$type Spawner")
+                val i = ItemUtils.newItem(Material.SPAWNER, "${ChatColor.YELLOW}${formatTypeAsName(type)} Spawner")
                 p.world.dropItem(b.location, i)
             }
         }
@@ -48,7 +49,7 @@ class SilkSpawner: Listener {
             val tn = tool.itemMeta!!.displayName
             val list = arrayListOf("BLAZE", "SKELETON", "SPIDER", "ZOMBIE", "SILVERFISH", "MAGMA_CUBE", "CAVE_SPIDER")
             for (item in list) {
-                if (tn.contains("${ChatColor.YELLOW}$item ")) {
+                if (tn.contains("${ChatColor.YELLOW}${item.replace("_", " ")}", true)) {
                     val e = EntityType.valueOf(item)
                     val bs = event.block.state
                     (bs as CreatureSpawner).spawnedType = e
@@ -59,6 +60,10 @@ class SilkSpawner: Listener {
             event.isCancelled = true
             p.sendMessage("${ChatColor.RED}Illegal spawner")
         }
+    }
+
+    private fun formatTypeAsName(type: EntityType): String {
+        return StringUtils.capitalizeFirstLetters(type.name.replace("_", " "))
     }
 
 }
