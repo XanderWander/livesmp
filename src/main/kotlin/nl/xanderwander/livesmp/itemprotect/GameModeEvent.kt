@@ -13,10 +13,8 @@ class GameModeEvent: Listener {
     fun onGameModeChange(event: PlayerGameModeChangeEvent) {
 
         if (event.newGameMode == GameMode.CREATIVE) {
-            if (!Main.inventoryStorage.hasInventoryStored(event.player)) {
-                Main.inventoryStorage.storeInventory(event.player)
-                event.player.send("Je survival inventory is opgeslagen.")
-            }
+            Main.inventoryStorage.storeInventory(event.player)
+            event.player.send("Je survival inventory is opgeslagen.")
         }
 
         if (event.newGameMode == GameMode.SURVIVAL || event.newGameMode == GameMode.ADVENTURE) {

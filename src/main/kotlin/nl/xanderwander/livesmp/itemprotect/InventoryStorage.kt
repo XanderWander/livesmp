@@ -12,10 +12,10 @@ class InventoryStorage {
 
     private val path = "plugins/LiveSMP/Inventories/"
     private val serializer = InventorySerializer()
-    private val hasInventoryStored = hashMapOf<Player, Boolean>()
 
     fun hasInventoryStored(player: Player): Boolean {
-        return if (hasInventoryStored.containsKey(player)) hasInventoryStored[player] ?: false else false
+        val filePath = path + player.uniqueId
+        return File(filePath).exists()
     }
 
     fun storeInventory(player: Player) {
@@ -27,7 +27,6 @@ class InventoryStorage {
         Gson().toJson(inv, writer)
         writer.flush()
         writer.close()
-        hasInventoryStored[player] = true
     }
 
     fun loadInventory(player: Player) {
@@ -38,7 +37,6 @@ class InventoryStorage {
         val type = object : TypeToken<String>() {}.type
         val inv: String = Gson().fromJson(reader, type)
         serializer.playerInventoryFromBase64(inv, player.inventory)
-        hasInventoryStored[player] = false
     }
 
 }
