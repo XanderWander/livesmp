@@ -52,6 +52,7 @@ class RegisterModule {
         instance.getCommand("discord")?.setExecutor(Help())
         instance.getCommand("showitem")?.setExecutor(ShowItem())
         instance.getCommand("trail")?.setExecutor(TrailCommand())
+        instance.getCommand("webreload")?.setExecutor(WebReload())
     }
 
 }

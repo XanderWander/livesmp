@@ -4,6 +4,7 @@ import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.modules.StaticModule
 import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.playerflags.WorldChangeEvent
+import nl.xanderwander.livesmp.web.WebLoader
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -18,7 +19,7 @@ class JoinQuit: Listener {
         PlayerModule.addPlayer(e.player)
         StaticModule.updateTab()
 
-        StaticModule.setResourcePack(e.player)
+        WebLoader.setResourcePack(e.player)
         StaticModule.joinInfo(e.player)
         PlayerModule.setFlag(e.player, WorldChangeEvent.worldNameFlag(e.player.world))
         Main.instance.adminModeCommand.hideHiddenFor(e.player)

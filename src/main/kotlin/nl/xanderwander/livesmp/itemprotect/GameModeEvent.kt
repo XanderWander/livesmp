@@ -12,12 +12,14 @@ class GameModeEvent: Listener {
     @EventHandler
     fun onGameModeChange(event: PlayerGameModeChangeEvent) {
 
+        if (event.player.gameMode == event.newGameMode) return
+
         if (event.newGameMode == GameMode.CREATIVE) {
             Main.inventoryStorage.storeInventory(event.player)
             event.player.send("Je survival inventory is opgeslagen.")
         }
 
-        if (event.newGameMode == GameMode.SURVIVAL || event.newGameMode == GameMode.ADVENTURE) {
+        if (event.player.gameMode == GameMode.CREATIVE) {
             if (Main.inventoryStorage.hasInventoryStored(event.player)) {
                 Main.inventoryStorage.loadInventory(event.player)
                 event.player.send("Je survival inventory is ingeladen.")

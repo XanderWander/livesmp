@@ -1,11 +1,7 @@
 package nl.xanderwander.livesmp
 
-import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
-import com.comphenix.protocol.events.ListenerPriority
-import com.comphenix.protocol.events.PacketAdapter
-import com.comphenix.protocol.events.PacketEvent
 import nl.xanderwander.livesmp.chat.LuckPermsHook
 import nl.xanderwander.livesmp.commands.adminmode.AdminModeCommand
 import nl.xanderwander.livesmp.itemprotect.InventoryStorage
@@ -15,7 +11,7 @@ import nl.xanderwander.livesmp.modules.StaticModule
 import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.reflection.packets.PacketEntityDestroy
 import nl.xanderwander.livesmp.trails.TrailManager
-import org.bukkit.Bukkit
+import nl.xanderwander.livesmp.web.WebLoader
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
@@ -43,11 +39,10 @@ class Main: JavaPlugin() {
         luckPermsHook = LuckPermsHook()
         trailManager = TrailManager()
 
-
-
         registerModule.register(this)
         sleepModule.runTaskTimer(this, 0L, 1L)
 
+        WebLoader.loadEmojiList()
         PlayerModule.initialize()
         StaticModule.updateTab()
 

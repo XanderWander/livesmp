@@ -17,27 +17,6 @@ import java.net.URL
 class StaticModule {
 
     companion object {
-        private const val version_url = "http://resourcepacks.hyparks.com/latest.php"
-        private const val base_url = "http://resourcepacks.hyparks.com/"
-
-        private fun getZipFile(): String {
-            val text = URL(version_url).readText()
-            val json = Gson().fromJson(text, JsonObject::class.java)
-            val zip = json.get("file").asString
-            return base_url + zip
-        }
-
-        fun setResourcePack(p: Player) {
-            RunnableUtils.doAsync {
-                p.setResourcePack(getZipFile())
-            }
-        }
-
-        fun resetResourcePack(p: Player) {
-            RunnableUtils.doAsync {
-                p.setResourcePack("https://reset.com/")
-            }
-        }
 
         fun updateTab() {
             for (p: Player in PlayerModule.all()) {

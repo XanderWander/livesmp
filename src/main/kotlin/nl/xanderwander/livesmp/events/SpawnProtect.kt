@@ -112,14 +112,12 @@ class SpawnProtect: Listener {
 
     private fun spawnProtect(loc: Location): Boolean {
 
-        val maxX =  75
-        val minX = -75
-        val maxZ =  75
-        val minZ = -75
-        if (loc.x > maxX) return false
-        if (loc.x < minX) return false
-        if (loc.z > maxZ) return false
-        if (loc.z < minZ) return false
+        if (loc.world?.name == "world_the_end") return false
+        val size = if (loc.world?.name == "world_nether") 10.0 else 75.0
+        if (loc.x >= size) return false
+        if (loc.x < -size) return false
+        if (loc.z >= size) return false
+        if (loc.z < -size) return false
         return true
 
     }

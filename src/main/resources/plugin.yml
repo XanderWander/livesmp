@@ -1,5 +1,5 @@
 main: nl.xanderwander.livesmp.Main
-name: livesmp
+name: LiveSMP
 version: 0.0.1
 authors: [XanderWander, Lego_freak1999]
 api-version: 1.17
@@ -34,3 +34,5 @@ commands:
     description: showitem
   trail:
     description: trail
+  webreload:
+    description: reload all web data
