@@ -53,6 +53,7 @@ class RegisterModule {
         instance.getCommand("showitem")?.setExecutor(ShowItem())
         instance.getCommand("trail")?.setExecutor(TrailCommand())
         instance.getCommand("webreload")?.setExecutor(WebReload())
+        instance.getCommand("sr")?.setExecutor(Restart())
     }
 
 }

@@ -36,3 +36,5 @@ commands:
     description: trail
   webreload:
     description: reload all web data
+  sr:
+    description: Do a safe restart
