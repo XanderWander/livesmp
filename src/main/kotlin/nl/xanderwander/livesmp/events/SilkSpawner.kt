@@ -28,7 +28,7 @@ class SilkSpawner: Listener {
             }
         }
 
-        val list = arrayListOf(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.AMETHYST_CLUSTER)
+        val list = arrayListOf(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.SPAWNER)
 
         if (list.contains(event.block.type)) {
             PlayerModule.all().forEach {
