@@ -17,15 +17,13 @@ class Restart: CommandExecutor {
             object: BukkitRunnable() {
                 override fun run() {
                     Bukkit.getOnlinePlayers().forEach {
-                        it.sendTitle("§6Let op de server gaat restarten!", "§7${30 - index}..", 0, 20, 10)
+                        it.sendTitle("§6Server herstarten!", "§7${60 - index}..", 0, 40, 10)
                     }
                     index++
-                    if (index == 30) {
+                    if (index == 60) {
                         Bukkit.getOnlinePlayers().forEach {
                             it.kickPlayer("§cDe server is aan het restarten.")
                         }
-                    }
-                    if (index == 31) {
                         Bukkit.getServer().spigot().restart()
                         this.cancel()
                     }
