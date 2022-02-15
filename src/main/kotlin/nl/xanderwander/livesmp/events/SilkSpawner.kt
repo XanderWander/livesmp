@@ -5,6 +5,7 @@ import nl.xanderwander.livesmp.modules.PlayerModule
 import nl.xanderwander.livesmp.utils.ItemUtils
 import nl.xanderwander.livesmp.utils.StringUtils
 import nl.xanderwander.livesmp.utils.send
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.CreatureSpawner
 import org.bukkit.enchantments.Enchantment
@@ -19,25 +20,25 @@ class SilkSpawner: Listener {
     @EventHandler
     fun onBlockBreak(event: BlockBreakEvent) {
         val p = event.player
-        if (p.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
-            val b = event.block
-            if (b.type == Material.SPAWNER) {
-                val type = (b.state as CreatureSpawner).spawnedType
-                val i = ItemUtils.newItem(Material.SPAWNER, "${ChatColor.YELLOW}${formatTypeAsName(type)} Spawner")
-                p.world.dropItem(b.location, i)
+        if (!spawnProtect(event.block.location)) {
+            if (p.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
+                val b = event.block
+                if (b.type == Material.SPAWNER) {
+                    val type = (b.state as CreatureSpawner).spawnedType
+                    val i = ItemUtils.newItem(Material.SPAWNER, "${ChatColor.YELLOW}${formatTypeAsName(type)} Spawner")
+                    p.world.dropItem(b.location, i)
+                }
             }
-        }
+            val list = arrayListOf(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.SPAWNER)
 
-        val list = arrayListOf(Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.SPAWNER)
-
-        if (list.contains(event.block.type)) {
-            PlayerModule.all().forEach {
-                if (it.hasPermission("adminmode.notify")) {
-                    it.send("${p.name} heeft ${event.block.type.name.lowercase().replace("_", " ")} gemined.")
+            if (list.contains(event.block.type)) {
+                PlayerModule.all().forEach {
+                    if (it.hasPermission("adminmode.notify")) {
+                        it.send("${p.name} heeft ${event.block.type.name.lowercase().replace("_", " ")} gemined.")
+                    }
                 }
             }
         }
-
 
     }
 
@@ -66,4 +67,15 @@ class SilkSpawner: Listener {
         return StringUtils.capitalizeFirstLetters(type.name.replace("_", " "))
     }
 
+    private fun spawnProtect(loc: Location): Boolean {
+
+        if (loc.world?.name == "world_the_end") return false
+        val size = if (loc.world?.name == "world_nether") 10.0 else 75.0
+        if (loc.x >= size) return false
+        if (loc.x < -size) return false
+        if (loc.z >= size) return false
+        if (loc.z < -size) return false
+        return true
+
+    }
 }
