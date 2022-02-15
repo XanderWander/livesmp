@@ -102,13 +102,15 @@ class SpawnProtect: Listener {
             if (event.hasBlock() && event.clickedBlock!!.type.isInteractable) {
                 if (spawnProtect(event.clickedBlock!!.location)) {
                     event.isCancelled = true
-
-                    val loc = event.clickedBlock!!.location
-                    if ((loc.x == 3.0 || loc.x == 2.0) && loc.y == 74.0 && loc.z == -15.0) {
-                        event.player.performCommand("endinfo")
-                    }
                 }
 
+            }
+        }
+
+        if (event.hasBlock()) {
+            val loc = event.clickedBlock!!.location
+            if ((loc.x == 3.0 || loc.x == 2.0) && loc.y == 74.0 && loc.z == -16.0) {
+                event.player.performCommand("endinfo")
             }
         }
 //        if (event.player.name == "XanderWander") {

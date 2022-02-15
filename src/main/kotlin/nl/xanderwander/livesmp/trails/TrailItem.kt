@@ -2,7 +2,6 @@ package nl.xanderwander.livesmp.trails
 
 import nl.xanderwander.livesmp.Main
 import nl.xanderwander.livesmp.modules.PlayerModule
-import nl.xanderwander.livesmp.objects.Vector
 import nl.xanderwander.livesmp.reflection.packets.PacketEntityDestroy
 import nl.xanderwander.livesmp.reflection.packets.PacketEntityMetadata
 import nl.xanderwander.livesmp.reflection.packets.PacketSpawnEntity
