@@ -112,6 +112,9 @@ class SpawnProtect: Listener {
             if ((loc.x == 3.0 || loc.x == 2.0) && loc.y == 74.0 && loc.z == -16.0) {
                 event.player.performCommand("endinfo")
             }
+            if ((loc.x == 3.0 || loc.x == 2.0) && loc.y == 73.0 && loc.z == -16.0) {
+                event.isCancelled = false
+            }
         }
 //        if (event.player.name == "XanderWander") {
 //            event.player.send("${event.clickedBlock} \n${event.action}\n ${event.hand}\n ${event.hasBlock()}\n ${event.hasItem()}\n ${event.isBlockInHand}")
